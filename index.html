@@ -178,7 +178,7 @@
   .ind-left { flex: 0 0 auto; }
   .ind-mois-wrap { display: flex; align-items: baseline; gap: 4px; }
   .ind-mois-val {
-    font-size: 3.8rem;
+    font-size: 2.8rem;
     font-weight: 900;
     line-height: 1;
     color: #fff;
@@ -389,11 +389,11 @@
         <div class="ind-right" id="metricsRow">
           <div class="ind-metric">
             <div class="ind-metric-lbl">Capacité élargie</div>
-            <div class="ind-metric-val" id="mCapacity"></div>
+            <div class="ind-metric-val" id="mCapacity" style="color:#fff;font-size:1rem;font-weight:800;min-height:1.3em;"></div>
           </div>
           <div class="ind-metric">
             <div class="ind-metric-lbl">Besoin mensuel</div>
-            <div class="ind-metric-val" id="mBesoin"></div>
+            <div class="ind-metric-val" id="mBesoin" style="color:#fff;font-size:1rem;font-weight:800;min-height:1.3em;"></div>
           </div>
         </div>
       </div>
@@ -552,8 +552,8 @@ async function calculate() {
 
   // Métriques
   $('metricsRow').style.display = 'flex';
-  $('mCapacity').textContent = fmt(capacity);
-  $('mBesoin').textContent   = fmt(besoin);
+  const capEl = $('mCapacity'); capEl.textContent = fmt(capacity); capEl.style.color='#fff';
+  const besEl = $('mBesoin');   besEl.textContent = fmt(besoin);   besEl.style.color='#fff';
 
   // AI
   $('aiCard').style.display = 'block';
