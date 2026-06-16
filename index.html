@@ -463,7 +463,9 @@ async function calculate() {
   const card = $('indicCard');
   card.style.display = 'block';
   card.className = 'indicator-card ' + (isGreen ? 'green' : 'red');
-  $('indStatus').textContent = isGreen ? '✅  SITUATION VERTE' : '🔴  SITUATION ROUGE';
+  $('indStatus').innerHTML = isGreen
+    ? '<span style="font-size:2rem;filter:drop-shadow(0 0 8px #2ECC71)">🟢</span><span style="font-size:2rem;opacity:0.2;filter:grayscale(1)">🔴</span>'
+    : '<span style="font-size:2rem;opacity:0.2;filter:grayscale(1)">🟢</span><span style="font-size:2rem;filter:drop-shadow(0 0 8px #E74C3C)">🔴</span>';
 
   // MOIS en grand
   $('indMois').textContent = mois.toFixed(1);
