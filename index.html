@@ -49,7 +49,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 /* COMMENTAIRE */
 .ai { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 11px 13px; border-left: 3px solid #A495C3; display: none; }
 .ai-lbl { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #C8BFD9; margin-bottom: 6px; }
-.ai-txt { font-size: 0.78rem; line-height: 1.6; color: #fff; font-style: italic; }
+.ai-txt { font-size: 0.78rem; line-height: 1.8; color: #fff; font-style: italic; white-space: pre-line; }
 
 /* FORMULAIRE */
 .form { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 13px 13px 14px; }
@@ -267,9 +267,16 @@ ${isGreen ? 'Mets en avant les '+mois.toFixed(1)+' mois. Termine positivement.' 
 }
 
 function fallback(capacity, besoin, mois, isGreen) {
-  return isGreen
-    ? `Capacité élargie de ${fmt(capacity)}, soit ${mois.toFixed(1)} mois de couverture. Aucun signal d'alerte identifié.`
-    : `Capacité élargie de ${fmt(capacity)}, inférieure au besoin mensuel de ${fmt(besoin)}. Une vérification est recommandée.`;
+  if (isGreen) return [
+    `Capacité financière élargie : ${fmt(capacity)}`,
+    `Couverture : ${mois.toFixed(1)} mois de trésorerie disponible.`,
+    `Aucun signal d'alerte identifié aujourd'hui.`
+  ].join('\n');
+  return [
+    `Capacité financière élargie : ${fmt(capacity)}`,
+    `Besoin mensuel de référence : ${fmt(besoin)}`,
+    `Une vérification de la situation est recommandée.`
+  ].join('\n');
 }
 
 // FORMAT INPUTS
