@@ -134,7 +134,11 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
         </div>
         <div class="field">
           <label>Découvert autorisé</label>
-          <div class="iw"><input type="number" id="decouvert" value="25000" inputmode="decimal"><span>€</span></div>
+          <div class="iw">
+            <input type="text" id="decouvert" value="25 000" readonly style="opacity:0.5;cursor:default;background:rgba(255,255,255,0.04);border-color:rgba(164,149,195,0.2);">
+            <span>€</span>
+          </div>
+          <input type="hidden" id="decouvert_val" value="25000">
         </div>
         <div class="field full">
           <label>Besoin mensuel de référence</label>
@@ -160,14 +164,14 @@ function $(id) { return document.getElementById(id); }
 // PERSISTENCE
 function loadLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
-   ['decouvert','ist_decouvert'],['besoin','ist_besoin']].forEach(([id,key]) => {
+   ['besoin','ist_besoin']].forEach(([id,key]) => {
     const v = localStorage.getItem(key);
     if (v !== null && v !== '') $(id).value = v;
   });
 }
 function saveLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
-   ['decouvert','ist_decouvert'],['besoin','ist_besoin']].forEach(([id,key]) => {
+   ['besoin','ist_besoin']].forEach(([id,key]) => {
     localStorage.setItem(key, $(id).value);
   });
 }
@@ -191,7 +195,7 @@ async function saveGAS() {
     const p = new URLSearchParams({
       action:'save',
       courant:$('courant').value, epargne:$('epargne').value,
-      creances:$('creances').value, decouvert:$('decouvert').value,
+      creances:$('creances').value, decouvert:'25000',
       besoin:$('besoin').value
     });
     await fetch(GAS_URL + '?' + p.toString(), { mode:'no-cors' });
@@ -203,7 +207,7 @@ async function calculate() {
   const courant   = parseFloat($('courant').value)   || 0;
   const epargne   = parseFloat($('epargne').value)   || 0;
   const creances  = parseFloat($('creances').value)  || 0;
-  const decouvert = parseFloat($('decouvert').value) || 0;
+  const decouvert = parseFloat($('decouvert_val').value) || 25000;
   const besoin    = parseFloat($('besoin').value)    || 70000;
 
   saveLocal();
