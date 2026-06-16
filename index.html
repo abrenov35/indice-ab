@@ -261,7 +261,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #d4caec;
+    color: #ffffff;
     margin-bottom: 10px;
   }
   .fields {
@@ -278,7 +278,7 @@
   .field label {
     font-size: 0.62rem;
     font-weight: 600;
-    color: #d4caec;
+    color: #e8e2f5;
     letter-spacing: 0.04em;
   }
   .input-wrap {
@@ -411,7 +411,7 @@
     <!-- FORMULAIRE -->
     <div class="form-card">
       <div class="form-title">Saisie des données</div>
-      <div style="font-size:0.6rem;color:rgba(255,255,255,0.4);margin-bottom:8px;margin-top:-4px;">Découvert autorisé : 25 000 € (fixe)</div>
+      <div style="font-size:0.65rem;color:rgba(255,255,255,0.65);margin-bottom:8px;margin-top:-4px;">Découvert autorisé : 25 000 € (fixe)</div>
       <div class="fields">
         <div class="field">
           <label>Compte courant</label>
@@ -451,8 +451,18 @@
 
 <script>
 const fmt = n => {
-  const s = new Intl.NumberFormat('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}).format(n);
-  return s + ' €';
+  // Format comptable : 76 647,00 €
+  return new Intl.NumberFormat('fr-FR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(n) + ' €';
+};
+const fmtInt = n => {
+  // Format entier avec espace : 76 647 €
+  return new Intl.NumberFormat('fr-FR', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(n) + ' €';
 };
 const $ = id => document.getElementById(id);
 
