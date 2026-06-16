@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indice de Sérénité Trésorerie — AB RENOV 35</title>
+<style>
+  :root {
+    --navy: #162D49;
+    --beige: #F3EAE2;
+    --lavande: #A495C3;
+    --lavande-light: #C8BFD9;
+    --white: #FFFFFF;
+    --green: #2ECC71;
+    --green-dark: #219150;
+    --green-bg: #E8F8EF;
+    --red: #E74C3C;
+    --red-dark: #B03A2E;
+    --red-bg: #FDE8E6;
+    --text-main: #1a1a2e;
+    --text-muted: #6B7A8D;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 4px 24px rgba(22,45,73,0.10);
+    --shadow-lg: 0 8px 40px rgba(22,45,73,0.16);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--beige);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(22,45,73,0.25);
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: 'Century Gothic', 'Futura', 'Trebuchet MS', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+  }
+  .logo span {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--lavande-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-band {
+    height: 4px;
+    background: linear-gradient(90deg, var(--lavande) 0%, var(--navy) 100%);
+  }
+
+  /* MAIN */
+  main {
+    flex: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 28px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .page-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .page-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+  }
+  .card-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lavande);
+    margin-bottom: 18px;
+  }
+
+  /* FORM */
+  .fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 560px) {
+    .fields { grid-template-columns: 1fr; }
+  }
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field-group label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  .field-group .field-hint {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: -2px;
+  }
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-wrap span {
+    position: absolute;
+    right: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    font-weight: 500;
+  }
+  input[type="number"] {
+    width: 100%;
+    padding: 11px 36px 11px 14px;
+    border: 1.5px solid #DDD5CC;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    background: #FDFAF7;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type="number"]:focus {
+    border-color: var(--lavande);
+    box-shadow: 0 0 0 3px rgba(164,149,195,0.18);
+    background: #FFF;
+  }
+
+  .btn-calc {
+    margin-top: 8px;
+    width: 100%;
+    padding: 15px;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-calc:hover { background: #1e3d63; }
+  .btn-calc:active { transform: scale(0.98); }
+
+  /* INDICATOR */
+  #result-section { display: none; }
+
+  .indicator-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0 4px;
+  }
+  .indicator-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    line-height: 1;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.12);
+    transition: all 0.4s;
+    position: relative;
+  }
+  .indicator-circle.green {
+    background: linear-gradient(135deg, #2ECC71, #1aab58);
+    color: white;
+    box-shadow: 0 8px 36px rgba(46,204,113,0.35);
+  }
+  .indicator-circle.red {
+    background: linear-gradient(135deg, #E74C3C, #c0392b);
+    color: white;
+    box-shadow: 0 8px 36px rgba(231,76,60,0.35);
+  }
+  .status-label {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .status-label.green { color: var(--green-dark); }
+  .status-label.red { color: var(--red-dark); }
+
+  /* METRICS */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 4px;
+  }
+  @media (max-width: 480px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .metrics .metric:last-child { grid-column: span 2; }
+  }
+  .metric {
+    border-radius: var(--radius-sm);
+    padding: 14px 12px;
+    text-align: center;
+    background: var(--beige);
+  }
+  .metric-value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .metric-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 5px;
+  }
+
+  /* AI MESSAGE */
+  .ai-message {
+    border-left: 3px solid var(--lavande);
+    padding: 14px 16px;
+    background: linear-gradient(90deg, rgba(164,149,195,0.06) 0%, transparent 100%);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-main);
+    font-style: italic;
+  }
+  .ai-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lavande);
+    margin-bottom: 8px;
+    font-style: normal;
+  }
+
+  /* HISTORY */
+  .history-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 16px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  thead th {
+    text-align: left;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--lavande);
+    padding: 0 8px 10px;
+    border-bottom: 1.5px solid #EAE3DB;
+  }
+  tbody tr {
+    border-bottom: 1px solid #F0EAE2;
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: #FAF6F2; }
+  tbody td {
+    padding: 9px 8px;
+    color: var(--text-main);
+    font-weight: 500;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge.green { background: var(--green-bg); color: var(--green-dark); }
+  .badge.red { background: var(--red-bg); color: var(--red-dark); }
+
+  .btn-clear {
+    margin-top: 14px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid #DDD5CC;
+    border-radius: 20px;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-clear:hover { border-color: var(--red); color: var(--red-dark); }
+
+  /* CHART */
+  #chartCanvas {
+    width: 100%;
+    height: 200px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: #EDE5DC;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--white);
+    color: var(--navy);
+    box-shadow: 0 2px 8px rgba(22,45,73,0.08);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* SPINNER */
+  .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      AB RENOV 35
+      <span>Indice de Sérénité Trésorerie</span>
+    </div>
+  </div>
+</header>
+<div class="header-band"></div>
+
+<main>
+  <div>
+    <div class="page-title">Indice de Sérénité Trésorerie</div>
+    <div class="page-subtitle">Renseignez vos données pour obtenir un indicateur objectif de votre situation.</div>
+  </div>
+
+  <!-- SAISIE -->
+  <div class="card">
+    <div class="card-title">Données du jour</div>
+    <div class="fields">
+      <div class="field-group">
+        <label for="courant">Solde compte courant</label>
+        <div class="input-wrap">
+          <input type="number" id="courant" placeholder="0" step="100">
+          <span>€</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="epargne">Solde compte épargne</label>
+        <div class="input-wrap">
+          <input type="number" id="epargne" placeholder="0" step="100">
+          <span>€</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="creances">Créances certaines</label>
+        <div class="field-hint">Factures émises non douteuses</div>
+        <div class="input-wrap">
+          <input type="number" id="creances" placeholder="0" step="100">
+          <span>€</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="decouvert">Découvert autorisé</label>
+        <div class="input-wrap">
+          <input type="number" id="decouvert" value="25000" step="500">
+          <span>€</span>
+        </div>
+      </div>
+      <div class="field-group" style="grid-column: span 2 / span 2;">
+        <label for="besoin">Besoin mensuel de référence</label>
+        <div class="field-hint">Mémorisé automatiquement pour la prochaine utilisation</div>
+        <div class="input-wrap">
+          <input type="number" id="besoin" value="70000" step="500">
+          <span>€</span>
+        </div>
+      </div>
+    </div>
+    <button class="btn-calc" id="calcBtn" onclick="calculate()">
+      Calculer l'indice
+    </button>
+  </div>
+
+  <!-- RÉSULTAT -->
+  <div id="result-section">
+    <div class="card">
+      <div class="indicator-wrap">
+        <div class="indicator-circle" id="indicCircle">
+          <span id="indicIcon"></span>
+        </div>
+        <div class="status-label" id="statusLabel"></div>
+      </div>
+
+      <div class="metrics" id="metrics" style="margin-top: 24px;">
+        <div class="metric">
+          <div class="metric-value" id="mCapacity"></div>
+          <div class="metric-label">Capacité élargie</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value" id="mBesoin"></div>
+          <div class="metric-label">Besoin mensuel</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value" id="mMois"></div>
+          <div class="metric-label">Mois de couverture</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 22px;">
+        <div class="ai-label">💬 Commentaire du jour</div>
+        <div class="ai-message" id="aiMessage">
+          <span class="spinner" id="aiSpinner"></span>
+          <span id="aiText">Analyse en cours…</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORIQUE + GRAPHIQUE -->
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('history')">Historique</button>
+        <button class="tab-btn" onclick="switchTab('chart')">Évolution</button>
+      </div>
+
+      <div class="tab-content active" id="tab-history">
+        <div id="historyContent"></div>
+        <div style="text-align:right">
+          <button class="btn-clear" onclick="clearHistory()">Effacer l'historique</button>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-chart">
+        <canvas id="chartCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ─── UTILS ─────────────────────────────────────────────────────────────────
+const fmt = n => new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0}).format(n);
+const fmtK = n => {
+  if (Math.abs(n) >= 1000) return (n/1000).toFixed(0) + ' k€';
+  return fmt(n);
+};
+const $ = id => document.getElementById(id);
+
+// ─── PERSISTENCE ───────────────────────────────────────────────────────────
+function loadBesoin() {
+  const saved = localStorage.getItem('ist_besoin');
+  if (saved) $('besoin').value = saved;
+}
+function saveSettings() {
+  localStorage.setItem('ist_besoin', $('besoin').value);
+}
+function loadHistory() {
+  return JSON.parse(localStorage.getItem('ist_history') || '[]');
+}
+function saveHistory(h) {
+  localStorage.setItem('ist_history', JSON.stringify(h));
+}
+
+// ─── TABS ──────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && tab==='history') || (i===1 && tab==='chart'));
+  });
+  $('tab-history').classList.toggle('active', tab==='history');
+  $('tab-chart').classList.toggle('active', tab==='chart');
+  if (tab === 'chart') drawChart();
+}
+
+// ─── CALCULATE ─────────────────────────────────────────────────────────────
+async function calculate() {
+  const courant   = parseFloat($('courant').value)  || 0;
+  const epargne   = parseFloat($('epargne').value)  || 0;
+  const creances  = parseFloat($('creances').value) || 0;
+  const decouvert = parseFloat($('decouvert').value) || 0;
+  const besoin    = parseFloat($('besoin').value)   || 70000;
+
+  saveSettings();
+
+  const capacity = courant + epargne + decouvert + creances;
+  const mois     = besoin > 0 ? capacity / besoin : 0;
+  const isGreen  = capacity >= besoin;
+
+  // Show result section
+  $('result-section').style.display = 'block';
+  $('result-section').scrollIntoView({behavior:'smooth', block:'start'});
+
+  // Indicator
+  const circle = $('indicCircle');
+  circle.className = 'indicator-circle ' + (isGreen ? 'green' : 'red');
+  $('indicIcon').textContent = isGreen ? '✓' : '!';
+  $('statusLabel').className = 'status-label ' + (isGreen ? 'green' : 'red');
+  $('statusLabel').textContent = isGreen ? 'VERT' : 'ROUGE';
+
+  // Metrics
+  $('mCapacity').textContent = fmt(capacity);
+  $('mBesoin').textContent   = fmt(besoin);
+  $('mMois').textContent     = mois.toFixed(1) + ' mois';
+
+  // AI
+  $('aiSpinner').style.display = 'inline-block';
+  $('aiText').textContent = 'Analyse en cours…';
+
+  const entry = {
+    date: new Date().toISOString(),
+    capacity, besoin, mois: parseFloat(mois.toFixed(2)), status: isGreen ? 'VERT' : 'ROUGE'
+  };
+  addToHistory(entry);
+  renderHistory();
+
+  await generateAIMessage(capacity, besoin, mois, isGreen, entry.date);
+}
+
+// ─── AI MESSAGE ────────────────────────────────────────────────────────────
+async function generateAIMessage(capacity, besoin, mois, isGreen, dateISO) {
+  const dateStr = new Date(dateISO).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'});
+
+  const prompt = `Tu es le conseiller financier calme et bienveillant d'une entreprise de rénovation, AB RENOV 35.
+Génère un commentaire quotidien de trésorerie. Ton style : calme, factuel, professionnel, rassurant, jamais anxiogène, jamais catastrophiste. 2 à 3 phrases maximum. Ne commence pas par "Bonjour" ou autre formule de politesse.
+
+Données du ${dateStr} :
+- Capacité financière élargie : ${fmt(capacity)}
+- Besoin mensuel de référence : ${fmt(besoin)}
+- Couverture : ${mois.toFixed(1)} mois
+- Statut : ${isGreen ? 'VERT (situation saine)' : 'ROUGE (capacité inférieure au besoin mensuel)'}
+
+${isGreen
+  ? "Rédige un commentaire positif et rassurant. Cite les chiffres clés. Termine par une phrase indiquant qu'aucun signal d'alerte n'est identifié."
+  : "Rédige un commentaire factuel, calme et non alarmiste indiquant qu'une vérification de la situation est recommandée. Ne pas dramatiser."
+}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b => b.text || '').join('') || '';
+    $('aiSpinner').style.display = 'none';
+    $('aiText').textContent = text || fallbackMessage(capacity, besoin, mois, isGreen);
+  } catch(e) {
+    $('aiSpinner').style.display = 'none';
+    $('aiText').textContent = fallbackMessage(capacity, besoin, mois, isGreen);
+  }
+}
+
+function fallbackMessage(capacity, besoin, mois, isGreen) {
+  if (isGreen) {
+    return `Données du jour : votre capacité financière élargie est de ${fmt(capacity)}. Avec un besoin mensuel de référence de ${fmt(besoin)}, cela représente ${mois.toFixed(1)} mois de couverture. La situation est verte. Aucun signal d'alerte n'est identifié aujourd'hui.`;
+  } else {
+    return `Données du jour : votre capacité financière élargie est de ${fmt(capacity)}, inférieure au besoin mensuel de référence de ${fmt(besoin)}. Une vérification de la situation est recommandée.`;
+  }
+}
+
+// ─── HISTORY ───────────────────────────────────────────────────────────────
+function addToHistory(entry) {
+  const h = loadHistory();
+  h.unshift(entry);
+  if (h.length > 30) h.splice(30);
+  saveHistory(h);
+}
+
+function renderHistory() {
+  const h = loadHistory();
+  const el = $('historyContent');
+  if (!h.length) {
+    el.innerHTML = '<div class="history-empty">Aucun historique disponible.</div>';
+    return;
+  }
+  el.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Capacité</th>
+          <th>Besoin</th>
+          <th>Couverture</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${h.map(r => `
+          <tr>
+            <td>${new Date(r.date).toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'2-digit'})}</td>
+            <td>${fmtK(r.capacity)}</td>
+            <td>${fmtK(r.besoin)}</td>
+            <td>${r.mois.toFixed(1)} m.</td>
+            <td><span class="badge ${r.status === 'VERT' ? 'green' : 'red'}">${r.status}</span></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+function clearHistory() {
+  if (confirm('Effacer tout l\'historique ?')) {
+    localStorage.removeItem('ist_history');
+    renderHistory();
+    const canvas = $('chartCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+}
+
+// ─── CHART ─────────────────────────────────────────────────────────────────
+function drawChart() {
+  const h = loadHistory().slice().reverse();
+  if (!h.length) return;
+
+  const canvas = $('chartCanvas');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.offsetWidth;
+  const H = 200;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,W,H);
+
+  const PAD = { top:16, right:16, bottom:36, left:52 };
+  const cW = W - PAD.left - PAD.right;
+  const cH = H - PAD.top - PAD.bottom;
+
+  const allVals = h.flatMap(r => [r.capacity, r.besoin]);
+  const minV = Math.min(...allVals) * 0.85;
+  const maxV = Math.max(...allVals) * 1.1;
+
+  const toX = i => PAD.left + (i / Math.max(h.length-1,1)) * cW;
+  const toY = v => PAD.top + (1 - (v - minV)/(maxV - minV)) * cH;
+
+  // Grid
+  ctx.strokeStyle = '#EAE3DB';
+  ctx.lineWidth = 1;
+  for (let i=0; i<=4; i++) {
+    const y = PAD.top + (i/4)*cH;
+    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W-PAD.right, y); ctx.stroke();
+    const v = maxV - (i/4)*(maxV-minV);
+    ctx.fillStyle = '#9CA3AF';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtK(v), PAD.left-6, y+4);
+  }
+
+  // Lines
+  const drawLine = (data, color, dash=[]) => {
+    if (data.length < 1) return;
+    ctx.beginPath();
+    ctx.setLineDash(dash);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    data.forEach((v,i) => {
+      i===0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v));
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dots
+    ctx.fillStyle = color;
+    data.forEach((v,i) => {
+      ctx.beginPath();
+      ctx.arc(toX(i), toY(v), 4, 0, Math.PI*2);
+      ctx.fill();
+    });
+  };
+
+  drawLine(h.map(r=>r.capacity), '#162D49');
+  drawLine(h.map(r=>r.besoin), '#A495C3', [6,3]);
+
+  // X labels
+  ctx.fillStyle = '#9CA3AF';
+  ctx.font = '9px system-ui';
+  ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(h.length/6));
+  h.forEach((r,i) => {
+    if (i % step === 0 || i === h.length-1) {
+      const d = new Date(r.date);
+      ctx.fillText(`${d.getDate()}/${d.getMonth()+1}`, toX(i), H-PAD.bottom+14);
+    }
+  });
+
+  // Legend
+  const lx = PAD.left + cW - 10;
+  const ly = PAD.top + 6;
+  ctx.font = '10px system-ui';
+  ctx.textAlign = 'right';
+  [[`#162D49`, [], 'Capacité'], [`#A495C3`, [4,2], 'Besoin']].forEach(([c,d,l], i) => {
+    const x = lx - i*95;
+    ctx.strokeStyle = c; ctx.lineWidth = 2; ctx.setLineDash(d);
+    ctx.beginPath(); ctx.moveTo(x-30, ly+4); ctx.lineTo(x-14, ly+4); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#6B7A8D';
+    ctx.fillText(l, x-4, ly+8);
+  });
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+loadBesoin();
+renderHistory();
+const h = loadHistory();
+if (h.length) {
+  $('result-section').style.display = 'block';
+  const last = h[0];
+  const circle = $('indicCircle');
+  circle.className = 'indicator-circle ' + (last.status==='VERT'?'green':'red');
+  $('indicIcon').textContent = last.status==='VERT'?'✓':'!';
+  $('statusLabel').className = 'status-label ' + (last.status==='VERT'?'green':'red');
+  $('statusLabel').textContent = last.status;
+  $('mCapacity').textContent = fmt(last.capacity);
+  $('mBesoin').textContent   = fmt(last.besoin);
+  $('mMois').textContent     = last.mois.toFixed(1) + ' mois';
+  $('aiSpinner').style.display = 'none';
+  $('aiText').textContent = fallbackMessage(last.capacity, last.besoin, last.mois, last.status==='VERT');
+  renderHistory();
+}
+</script>
+</body>
+</html>
