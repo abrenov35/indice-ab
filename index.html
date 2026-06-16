@@ -167,7 +167,13 @@ function loadLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
    ['besoin','ist_besoin']].forEach(([id,key]) => {
     const v = localStorage.getItem(key);
-    if (v !== null && v !== '') $(id).value = v;
+    const el = $(id);
+    if (v !== null && v !== '') {
+      el.dataset.raw = v;
+      el.value = v;
+    } else if (el.value) {
+      el.dataset.raw = el.value;
+    }
   });
 }
 function saveLocal() {
@@ -288,8 +294,11 @@ loadLocal();
 loadGAS();
 // Format on load
 setTimeout(() => {
-  document.querySelectorAll('.iw input[type="number"]').forEach(el => formatInput(el));
-}, 300);
+  document.querySelectorAll('.iw input[type="number"]').forEach(el => {
+    if (el.value && !el.dataset.raw) el.dataset.raw = el.value;
+    formatInput(el);
+  });
+}, 200);
 </script>
 </body>
 </html>
