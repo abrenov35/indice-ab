@@ -273,14 +273,14 @@ ${isGreen ? 'Mets en avant les '+mois.toFixed(1)+' mois. Termine positivement.' 
 
 function fallback(capacity, besoin, mois, isGreen) {
   if (isGreen) return [
-    `Capacité financière élargie : ${fmt(capacity)}`,
-    `Couverture : ${mois.toFixed(1)} mois de trésorerie disponible.`,
-    `Aucun signal d'alerte identifié aujourd'hui.`
+    `▸ Capacité financière élargie : ${fmt(capacity)}`,
+    `▸ Couverture : ${mois.toFixed(1)} mois de trésorerie disponible.`,
+    `▸ Aucun signal d'alerte identifié aujourd'hui.`
   ].join('\n');
   return [
-    `Capacité financière élargie : ${fmt(capacity)}`,
-    `Besoin mensuel de référence : ${fmt(besoin)}`,
-    `Une vérification de la situation est recommandée.`
+    `▸ Capacité financière élargie : ${fmt(capacity)}`,
+    `▸ Besoin mensuel de référence : ${fmt(besoin)}`,
+    `▸ Une vérification de la situation est recommandée.`
   ].join('\n');
 }
 
