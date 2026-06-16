@@ -170,9 +170,10 @@ function loadLocal() {
     const el = $(id);
     if (v !== null && v !== '') {
       el.dataset.raw = v;
-      el.value = v;
+      el.value = new Intl.NumberFormat('fr-FR').format(parseFloat(v));
     } else if (el.value) {
       el.dataset.raw = el.value;
+      el.value = new Intl.NumberFormat('fr-FR').format(parseFloat(el.value));
     }
   });
 }
@@ -189,8 +190,12 @@ async function loadGAS() {
     const d = await r.json();
     if (d.courant !== '' && d.courant !== undefined && d.courant !== null) {
       [['courant',d.courant],['epargne',d.epargne],['creances',d.creances],
-       ['decouvert',d.decouvert],['besoin',d.besoin]].forEach(([id,val]) => {
-        if (val !== '' && val != null) $(id).value = val;
+       ['besoin',d.besoin]].forEach(([id,val]) => {
+        if (val !== '' && val != null) {
+          const el = $(id);
+          el.dataset.raw = val;
+          el.value = new Intl.NumberFormat('fr-FR').format(parseFloat(val));
+        }
       });
       saveLocal();
     }
@@ -300,12 +305,19 @@ document.querySelectorAll('.iw input[type="text"]').forEach(el => {
 loadLocal();
 loadGAS();
 // Format on load
-setTimeout(() => {
+// Format all fields on load
+function formatAll() {
   document.querySelectorAll('.iw input[type="text"]').forEach(el => {
-    if (el.value && !el.dataset.raw) el.dataset.raw = el.value;
-    formatInput(el);
+    if (!el.readOnly && el.value) {
+      const raw = el.value.replace(/[^0-9.-]/g,'');
+      if (raw) {
+        el.dataset.raw = raw;
+        el.value = new Intl.NumberFormat('fr-FR').format(parseFloat(raw));
+      }
+    }
   });
-}, 200);
+}
+setTimeout(formatAll, 100);
 </script>
 </body>
 </html>
