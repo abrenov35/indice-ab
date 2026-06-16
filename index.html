@@ -164,7 +164,7 @@
     color: rgba(255,255,255,0.7);
   }
   .ind-dots { display: flex; gap: 6px; align-items: center; }
-  .dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+  .dot { width: 22px; height: 22px; border-radius: 50%; display: inline-block; }
   .dot-green { background: #2ECC71; box-shadow: 0 0 0px #2ECC71; opacity: 0.2; }
   .dot-red   { background: #E74C3C; box-shadow: 0 0 0px #E74C3C; opacity: 0.2; }
   .dot-green.on { opacity: 1; box-shadow: 0 0 10px #2ECC71; }
@@ -199,11 +199,13 @@
     letter-spacing: 0.1em;
     margin-top: 2px;
   }
-  .ind-divider {
-    width: 1px;
-    height: 60px;
-    background: rgba(255,255,255,0.15);
+  .ind-divider-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     flex-shrink: 0;
+    padding: 4px 0;
   }
   .ind-right {
     flex: 1;
@@ -371,10 +373,6 @@
     <div class="indicator-card neutral" id="indicCard" style="display:none">
       <div class="ind-top">
         <div class="ind-status" id="indStatus"></div>
-        <div class="ind-dots">
-          <span id="dotGreen" class="dot dot-green"></span>
-          <span id="dotRed" class="dot dot-red"></span>
-        </div>
       </div>
       <div class="ind-body">
         <div class="ind-left">
@@ -384,7 +382,10 @@
           </div>
           <div class="ind-mois-label">de couverture</div>
         </div>
-        <div class="ind-divider"></div>
+        <div class="ind-divider-col">
+          <span id="dotGreen" class="dot dot-green"></span>
+          <span id="dotRed" class="dot dot-red"></span>
+        </div>
         <div class="ind-right" id="metricsRow">
           <div class="ind-metric">
             <div class="ind-metric-lbl">Capacité élargie</div>
