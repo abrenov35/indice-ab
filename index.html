@@ -138,7 +138,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
         <div class="field">
           <label>Découvert autorisé</label>
           <div class="iw">
-            <input type="text" id="decouvert" value="25 000" readonly style="opacity:0.5;cursor:default;background:rgba(255,255,255,0.04);border-color:rgba(164,149,195,0.2);">
+            <input type="text" id="decouvert" value="25 000" readonly tabindex="-1" style="opacity:0.55;cursor:default;background:rgba(255,255,255,0.04);border-color:rgba(164,149,195,0.2);">
             <span>€</span>
           </div>
           <input type="hidden" id="decouvert_val" value="25000">
@@ -289,7 +289,7 @@ function formatInput(el) {
 function unformatInput(el) {
   el.value = el.dataset.raw || '';
 }
-document.querySelectorAll('.iw input[type="text"]').forEach(el => {
+document.querySelectorAll('.iw input[type="text"]:not([readonly])').forEach(el => {
   el.addEventListener('focus', () => unformatInput(el));
   el.addEventListener('blur', () => formatInput(el));
 });
@@ -300,8 +300,8 @@ loadGAS();
 // Format on load
 // Format all fields on load
 function formatAll() {
-  document.querySelectorAll('.iw input[type="text"]').forEach(el => {
-    if (!el.readOnly && el.value) {
+  document.querySelectorAll('.iw input[type="text"]:not([readonly])').forEach(el => {
+    if (el.value) {
       const raw = el.value.replace(/[^0-9.-]/g,'');
       if (raw) {
         el.dataset.raw = raw;
@@ -309,6 +309,9 @@ function formatAll() {
       }
     }
   });
+  // Always restore readonly field
+  const dec = document.getElementById('decouvert');
+  if (dec) dec.value = '25 000';
 }
 setTimeout(formatAll, 100);
 </script>
