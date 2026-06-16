@@ -5,536 +5,200 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Sérénité Trésorerie — AB RENOV 35</title>
 <style>
-  :root {
-    --navy: #162D49;
-    --beige: #F3EAE2;
-    --lavande: #A495C3;
-    --lavande-light: #C8BFD9;
-    --white: #FFFFFF;
-    --green: #2ECC71;
-    --green-dark: #1aab58;
-    --red: #E74C3C;
-    --red-dark: #c0392b;
-    --text-muted: #6B7A8D;
-    --radius: 14px;
-    --radius-sm: 9px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; background: #162D49; color: #fff; overflow: hidden; }
 
-  html, body {
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--navy);
-    color: #fff;
-  }
+.app { display: flex; flex-direction: column; height: 100dvh; max-width: 480px; margin: 0 auto; }
 
-  /* LAYOUT : header fixe + contenu flex */
-  .app {
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-    max-width: 480px;
-    margin: 0 auto;
-  }
+/* HEADER */
+.hdr { background: #162D49; padding: 10px 16px 8px; border-bottom: 3px solid #A495C3; flex-shrink: 0; }
+.hdr-logo { font-family: 'Century Gothic','Trebuchet MS',sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.06em; }
+.hdr-sub { font-size: 0.6rem; color: #C8BFD9; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 1px; }
 
-  /* HEADER */
-  .header {
-    flex-shrink: 0;
-    background: var(--navy);
-    padding: 10px 16px 6px;
-    border-bottom: 3px solid transparent;
-    border-image: linear-gradient(90deg, var(--lavande), var(--navy)) 1;
-  }
-  .logo-main {
-    font-family: 'Century Gothic', 'Futura', 'Trebuchet MS', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.06em;
-    color: #fff;
-  }
-  .logo-sub {
-    font-size: 0.6rem;
-    color: #d4caec;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin-top: 1px;
-  }
+/* SCROLL BODY */
+.body { flex: 1; overflow-y: auto; padding: 10px 12px 16px; display: flex; flex-direction: column; gap: 10px; }
 
-  /* BODY SCROLL ZONE */
-  .body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px 12px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    -webkit-overflow-scrolling: touch;
-  }
+/* INDICATEUR */
+.ind { border-radius: 14px; padding: 14px 16px; border: 1.5px solid rgba(255,255,255,0.1); display: none; }
+.ind.green { background: rgba(26,171,88,0.15); border-color: rgba(46,204,113,0.5); }
+.ind.red   { background: rgba(192,57,43,0.15); border-color: rgba(231,76,60,0.5); }
 
-  /* INDICATEUR PRINCIPAL */
-  .indicator-card {
-    border-radius: var(--radius);
-    padding: 16px 12px 14px;
-    text-align: center;
-    transition: background 0.4s;
-    position: relative;
-    overflow: hidden;
-  }
-  .indicator-card.green { background: #1a3a28; border: 1.5px solid rgba(46,204,113,0.3); }
-  .indicator-card.red   { background: #3a1a1a; border: 1.5px solid rgba(231,76,60,0.3); }
-  .indicator-card.neutral { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); }
+.ind-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.ind-statut { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
+.ind-leds { display: flex; gap: 8px; }
+.led { width: 16px; height: 16px; border-radius: 50%; opacity: 0.2; }
+.led.vert  { background: #2ECC71; }
+.led.rouge { background: #E74C3C; }
+.led.on { opacity: 1; box-shadow: 0 0 10px currentColor; }
+.led.vert.on  { box-shadow: 0 0 10px #2ECC71; }
+.led.rouge.on { box-shadow: 0 0 10px #E74C3C; }
 
-  /* MOIS : élément star */
-  .ind-mois-wrap {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 6px;
-    margin: 2px 0 4px;
-  }
-  .ind-mois-val {
-    font-size: 4.2rem;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: #fff;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.18);
-    transition: color 0.4s;
-  }
-  .indicator-card.green .ind-mois-val { color: #2ECC71; text-shadow: 0 0 24px rgba(46,204,113,0.5); }
-  .indicator-card.red .ind-mois-val   { color: #E74C3C; text-shadow: 0 0 24px rgba(231,76,60,0.5); }
-  .ind-mois-unit {
-    font-size: 1.1rem;
-    font-weight: 600;
-    opacity: 0.85;
-    padding-bottom: 6px;
-  }
-  .ind-mois-label {
-    font-size: 0.7rem;
-    opacity: 0.8;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
+.ind-body { display: flex; align-items: center; gap: 0; }
+.ind-mois { flex: 0 0 auto; padding-right: 16px; border-right: 1px solid rgba(255,255,255,0.15); }
+.ind-mois-val { font-size: 2.8rem; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+.ind.green .ind-mois-val { color: #2ECC71; }
+.ind.red   .ind-mois-val { color: #E74C3C; }
+.ind-mois-unit { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+.ind-mois-lbl { font-size: 0.58rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
 
-  .ind-icon {
-    font-size: 1.6rem;
-    margin-bottom: 2px;
-    display: block;
-  }
+.ind-metrics { flex: 1; padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
+.ind-metric-lbl { font-size: 0.58rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+.ind-metric-val { font-size: 1.05rem; font-weight: 800; color: #ffffff; }
 
-  
-  .metric-val {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.1;
-  }
-  .metric-lbl {
-    font-size: 0.6rem;
-    opacity: 1;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 2px;
-    color: rgba(255,255,255,0.7);
-  }
+/* COMMENTAIRE */
+.ai { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 11px 13px; border-left: 3px solid #A495C3; display: none; }
+.ai-lbl { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #C8BFD9; margin-bottom: 6px; }
+.ai-txt { font-size: 0.78rem; line-height: 1.6; color: #fff; font-style: italic; }
 
-  /* INDICATEUR */
-  .indicator-card {
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    border: 1.5px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.06);
-  }
-  .indicator-card.green { background: rgba(26,171,88,0.12); border-color: rgba(46,204,113,0.4); }
-  .indicator-card.red   { background: rgba(192,57,43,0.12); border-color: rgba(231,76,60,0.4); }
+/* FORMULAIRE */
+.form { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 13px 13px 14px; }
+.form-title { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #fff; margin-bottom: 12px; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field.full { grid-column: span 2; }
+.field label { font-size: 0.65rem; font-weight: 600; color: #e0d8f0; }
+.field-hint { font-size: 0.6rem; color: rgba(255,255,255,0.5); margin-top: -2px; }
+.iw { position: relative; }
+.iw input { width: 100%; padding: 9px 28px 9px 10px; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(164,149,195,0.4); border-radius: 8px; color: #fff; font-size: 0.95rem; font-weight: 700; outline: none; -moz-appearance: textfield; }
+.iw input::-webkit-inner-spin-button, .iw input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.iw input:focus { border-color: #A495C3; background: rgba(255,255,255,0.15); }
+.iw input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
+.iw span { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); font-size: 0.8rem; pointer-events: none; }
 
-  .ind-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .ind-status {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-  }
-  .ind-dots { display: flex; gap: 6px; align-items: center; }
-  .dot { width: 22px; height: 22px; border-radius: 50%; display: inline-block; }
-  .dot-green { background: #2ECC71; box-shadow: 0 0 0px #2ECC71; opacity: 0.2; }
-  .dot-red   { background: #E74C3C; box-shadow: 0 0 0px #E74C3C; opacity: 0.2; }
-  .dot-green.on { opacity: 1; box-shadow: 0 0 10px #2ECC71; }
-  .dot-red.on   { opacity: 1; box-shadow: 0 0 10px #E74C3C; }
+.btn { margin-top: 11px; width: 100%; padding: 13px; background: #A495C3; color: #162D49; font-size: 0.88rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; border: none; border-radius: 9px; cursor: pointer; }
+.btn:active { transform: scale(0.98); }
 
-  .ind-body {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .ind-left { flex: 0 0 auto; }
-  .ind-mois-wrap { display: flex; align-items: baseline; gap: 4px; }
-  .ind-mois-val {
-    font-size: 2.8rem;
-    font-weight: 900;
-    line-height: 1;
-    color: #fff;
-    letter-spacing: -0.02em;
-  }
-  .indicator-card.green .ind-mois-val { color: #2ECC71; }
-  .indicator-card.red   .ind-mois-val { color: #E74C3C; }
-  .ind-mois-unit {
-    font-size: 1rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.7);
-    padding-bottom: 4px;
-  }
-  .ind-mois-label {
-    font-size: 0.62rem;
-    color: rgba(255,255,255,0.55);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 2px;
-  }
-  .ind-divider-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    padding: 4px 0;
-  }
-  .ind-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .ind-metric-val {
-    font-size: 1.15rem;
-    font-weight: 900;
-    color: #ffffff !important;
-    letter-spacing: -0.01em;
-    min-height: 1.2em;
-  }
-  .ind-metric-lbl {
-    font-size: 0.58rem;
-    color: rgba(255,255,255,0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 2px;
-  }
-
-  /* COMMENTAIRE IA */
-  .ai-card {
-    background: rgba(255,255,255,0.10);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    border-left: 3px solid var(--lavande);
-  }
-  .ai-lbl {
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #ffffff;
-    margin-bottom: 5px;
-  }
-  .ai-text {
-    font-size: 0.78rem;
-    line-height: 1.55;
-    color: #ffffff;
-    font-style: italic;
-  }
-
-  /* FORMULAIRE */
-  .form-card {
-    background: rgba(255,255,255,0.10);
-    border-radius: var(--radius);
-    padding: 12px;
-  }
-  .form-title {
-    font-size: 0.62rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-  .fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .field.full { grid-column: span 2; }
-  .field label {
-    font-size: 0.62rem;
-    font-weight: 600;
-    color: #e8e2f5;
-    letter-spacing: 0.04em;
-  }
-  .input-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .input-wrap span {
-    position: absolute;
-    right: 10px;
-    font-size: 0.8rem;
-    color: #d4caec;
-    pointer-events: none;
-    font-weight: 500;
-  }
-  input[type="number"] {
-    width: 100%;
-    padding: 9px 28px 9px 10px;
-    border: 1.5px solid rgba(164,149,195,0.5);
-    border-radius: 8px;
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #fff;
-    background: rgba(255,255,255,0.12);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    -moz-appearance: textfield;
-  }
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-  input[type="number"]:focus {
-    border-color: var(--lavande);
-    box-shadow: 0 0 0 3px rgba(164,149,195,0.2);
-    background: rgba(0,0,0,0.25);
-  }
-  input[type="number"]::placeholder { color: rgba(255,255,255,0.3); font-weight: 400; }
-
-  .btn-calc {
-    margin-top: 10px;
-    width: 100%;
-    padding: 13px;
-    background: var(--lavande);
-    color: var(--navy);
-    font-size: 0.88rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-  }
-  .btn-calc:hover { background: #b8aad4; }
-  .btn-calc:active { transform: scale(0.98); }
-
-  /* PLACEHOLDER état initial */
-  .placeholder {
-    text-align: center;
-    padding: 10px 0 4px;
-    opacity: 0.4;
-    font-size: 0.8rem;
-  }
-
-  /* SPINNER */
-  .spinner {
-    display: inline-block;
-    width: 12px; height: 12px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-  }
+.spinner { display: inline-block; width: 11px; height: 11px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 5px; }
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <div class="header">
-    <div class="logo-main">AB RENOV 35</div>
-    <div class="logo-sub">Indice de Sérénité Trésorerie</div>
+  <div class="hdr">
+    <div class="hdr-logo">AB RENOV 35</div>
+    <div class="hdr-sub">Indice de Sérénité Trésorerie</div>
   </div>
 
   <div class="body">
 
     <!-- INDICATEUR -->
-    <div class="indicator-card neutral" id="indicCard" style="display:none">
-      <div class="ind-top">
-        <div class="ind-status" id="indStatus"></div>
+    <div class="ind" id="ind">
+      <div class="ind-header">
+        <div class="ind-statut" id="indStatut"></div>
+        <div class="ind-leds">
+          <div class="led vert" id="ledVert"></div>
+          <div class="led rouge" id="ledRouge"></div>
+        </div>
       </div>
       <div class="ind-body">
-        <div class="ind-left">
-          <div class="ind-mois-wrap">
-            <span class="ind-mois-val" id="indMois"></span>
-            <span class="ind-mois-unit">mois</span>
-          </div>
-          <div class="ind-mois-label">de couverture</div>
+        <div class="ind-mois">
+          <div class="ind-mois-val" id="indMois"></div>
+          <div class="ind-mois-unit">mois</div>
+          <div class="ind-mois-lbl">de couverture</div>
         </div>
-        <div class="ind-divider-col">
-          <span id="dotGreen" class="dot dot-green"></span>
-          <span id="dotRed" class="dot dot-red"></span>
-        </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div class="ind-metrics">
           <div>
-            <div style="font-size:0.58rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">Capacité élargie</div>
-            <div id="mCapacity" style="font-size:1.1rem;font-weight:900;color:#fff;"></div>
+            <div class="ind-metric-lbl">Capacité élargie</div>
+            <div class="ind-metric-val" id="mCap"></div>
           </div>
           <div>
-            <div style="font-size:0.58rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">Besoin mensuel</div>
-            <div id="mBesoin" style="font-size:1.1rem;font-weight:900;color:#fff;"></div>
+            <div class="ind-metric-lbl">Besoin mensuel</div>
+            <div class="ind-metric-val" id="mBes"></div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- COMMENTAIRE IA -->
-    <div class="ai-card" id="aiCard" style="display:none">
+    <div class="ai" id="aiCard">
       <div class="ai-lbl">💬 Commentaire du jour</div>
-      <div class="ai-text" id="aiText">
-        <span class="spinner" id="aiSpinner" style="display:none"></span>
-        <span id="aiContent"></span>
-      </div>
+      <div class="ai-txt" id="aiTxt"></div>
     </div>
 
     <!-- FORMULAIRE -->
-    <div class="form-card">
+    <div class="form">
       <div class="form-title">Saisie des données</div>
-      <div style="font-size:0.65rem;color:rgba(255,255,255,0.65);margin-bottom:8px;margin-top:-4px;">Découvert autorisé : 25 000 € (fixe)</div>
       <div class="fields">
         <div class="field">
           <label>Compte courant</label>
-          <div class="input-wrap">
-            <input type="number" id="courant" placeholder="0" step="100" inputmode="decimal">
-            <span>€</span>
-          </div>
+          <div class="iw"><input type="number" id="courant" placeholder="0" inputmode="decimal"><span>€</span></div>
         </div>
         <div class="field">
           <label>Compte épargne</label>
-          <div class="input-wrap">
-            <input type="number" id="epargne" placeholder="0" step="100" inputmode="decimal">
-            <span>€</span>
-          </div>
+          <div class="iw"><input type="number" id="epargne" placeholder="0" inputmode="decimal"><span>€</span></div>
         </div>
-        <div class="field full">
+        <div class="field">
           <label>Créances certaines</label>
-          <div class="input-wrap">
-            <input type="number" id="creances" placeholder="0" step="100" inputmode="decimal">
-            <span>€</span>
-          </div>
+          <div class="iw"><input type="number" id="creances" placeholder="0" inputmode="decimal"><span>€</span></div>
         </div>
-<input type="hidden" id="decouvert" value="25000">
+        <div class="field">
+          <label>Découvert autorisé</label>
+          <div class="iw"><input type="number" id="decouvert" value="25000" inputmode="decimal"><span>€</span></div>
+        </div>
         <div class="field full">
           <label>Besoin mensuel de référence</label>
-          <div class="input-wrap">
-            <input type="number" id="besoin" value="70000" step="500" inputmode="decimal">
-            <span>€</span>
-          </div>
+          <div class="iw"><input type="number" id="besoin" value="70000" inputmode="decimal"><span>€</span></div>
         </div>
       </div>
-      <button class="btn-calc" onclick="calculate()">Calculer l'indice</button>
+      <button class="btn" onclick="calculate()">Calculer l'indice</button>
     </div>
 
-  </div><!-- /body -->
-</div><!-- /app -->
+  </div>
+</div>
 
 <script>
-const fmt = n => {
-  // Format comptable : 76 647,00 €
-  return new Intl.NumberFormat('fr-FR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(n) + ' €';
-};
-const fmtInt = n => {
-  // Format entier avec espace : 76 647 €
-  return new Intl.NumberFormat('fr-FR', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(n) + ' €';
-};
-const $ = id => document.getElementById(id);
-
-// ─── CONFIG ────────────────────────────────────────────────────────────────
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbykyQJ0L8IJ0USn2xDbWB12Wdcap0-mgiuA0ymnvtAQfiDKKksa1JuooevID_NHBjc0/exec';
 
-// ─── PERSISTENCE ───────────────────────────────────────────────────────────
+// Format comptable français : 76 647,00 €
+function fmt(n) {
+  return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n) + '\u00a0€';
+}
+
+function $(id) { return document.getElementById(id); }
+
+// PERSISTENCE
 function loadLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
-   ['besoin','ist_besoin'],['decouvert','ist_decouvert']].forEach(([id, key]) => {
+   ['decouvert','ist_decouvert'],['besoin','ist_besoin']].forEach(([id,key]) => {
     const v = localStorage.getItem(key);
     if (v !== null && v !== '') $(id).value = v;
   });
 }
 function saveLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
-   ['besoin','ist_besoin'],['decouvert','ist_decouvert']].forEach(([id, key]) => {
+   ['decouvert','ist_decouvert'],['besoin','ist_besoin']].forEach(([id,key]) => {
     localStorage.setItem(key, $(id).value);
   });
 }
 
-async function loadFromGAS() {
+async function loadGAS() {
   try {
-    const res = await fetch(GAS_URL);
-    const data = await res.json();
-    if (data.courant !== '' && data.courant !== undefined) {
-      [['courant',data.courant],['epargne',data.epargne],['creances',data.creances],
-       ['decouvert',data.decouvert],['besoin',data.besoin]].forEach(([id, val]) => {
-        if (val !== '' && val !== null && val !== undefined) $(id).value = val;
+    const r = await fetch(GAS_URL);
+    const d = await r.json();
+    if (d.courant !== '' && d.courant !== undefined && d.courant !== null) {
+      [['courant',d.courant],['epargne',d.epargne],['creances',d.creances],
+       ['decouvert',d.decouvert],['besoin',d.besoin]].forEach(([id,val]) => {
+        if (val !== '' && val != null) $(id).value = val;
       });
       saveLocal();
-      showSyncStatus('✓ Données synchronisées');
     }
-  } catch(e) {
-    loadLocal();
-    showSyncStatus('⚠ Mode hors ligne', true);
-  }
+  } catch(e) { /* hors ligne : localStorage déjà chargé */ }
 }
 
-async function saveAll() {
-  saveLocal();
+async function saveGAS() {
   try {
-    const params = new URLSearchParams({
-      action: 'save',
-      courant:   $('courant').value,
-      epargne:   $('epargne').value,
-      creances:  $('creances').value,
-      decouvert: $('decouvert').value,
-      besoin:    $('besoin').value
+    const p = new URLSearchParams({
+      action:'save',
+      courant:$('courant').value, epargne:$('epargne').value,
+      creances:$('creances').value, decouvert:$('decouvert').value,
+      besoin:$('besoin').value
     });
-    await fetch(GAS_URL + '?' + params.toString(), {mode:'no-cors'});
-    showSyncStatus('✓ Données sauvegardées');
-  } catch(e) {
-    showSyncStatus('⚠ Sauvegarde locale uniquement', true);
-  }
+    await fetch(GAS_URL + '?' + p.toString(), { mode:'no-cors' });
+  } catch(e) {}
 }
 
-function showSyncStatus(msg, warn=false) {
-  let el = $('syncStatus');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'syncStatus';
-    el.style.cssText = 'text-align:center;font-size:0.62rem;padding:3px 0;transition:opacity 1s;';
-    document.querySelector('.body').prepend(el);
-  }
-  el.style.color = warn ? '#ffb347' : '#7dff9e';
-  el.style.opacity = '1';
-  el.textContent = msg;
-  setTimeout(() => { el.style.opacity = '0'; }, 3000);
-}
-
-// ─── CALCULATE ─────────────────────────────────────────────────────────────
+// CALCULATE
 async function calculate() {
   const courant   = parseFloat($('courant').value)   || 0;
   const epargne   = parseFloat($('epargne').value)   || 0;
@@ -542,79 +206,59 @@ async function calculate() {
   const decouvert = parseFloat($('decouvert').value) || 0;
   const besoin    = parseFloat($('besoin').value)    || 70000;
 
-  saveAll();
+  saveLocal();
+  saveGAS();
 
   const capacity = courant + epargne + decouvert + creances;
   const mois     = besoin > 0 ? capacity / besoin : 0;
   const isGreen  = capacity >= besoin;
 
-  // Indicateur
-  const card = $('indicCard');
-  card.style.display = 'block';
-  card.className = 'indicator-card ' + (isGreen ? 'green' : 'red');
-  $('indStatus').textContent = isGreen ? 'TRÉSORERIE EXCÉDENTAIRE' : 'TRÉSORERIE SOUS TENSION';
-  $('dotGreen').className = 'dot dot-green' + (isGreen ? ' on' : '');
-  $('dotRed').className   = 'dot dot-red'   + (!isGreen ? ' on' : '');
+  // Afficher indicateur
+  const ind = $('ind');
+  ind.style.display = 'block';
+  ind.className = 'ind ' + (isGreen ? 'green' : 'red');
 
-  // MOIS en grand
+  $('indStatut').textContent = isGreen ? 'TRÉSORERIE EXCÉDENTAIRE' : 'TRÉSORERIE SOUS TENSION';
+  $('ledVert').className  = 'led vert'  + (isGreen  ? ' on' : '');
+  $('ledRouge').className = 'led rouge' + (!isGreen ? ' on' : '');
   $('indMois').textContent = mois.toFixed(1);
-  $('indMoisLabel').textContent = 'de couverture de trésorerie';
+  $('mCap').textContent = fmt(capacity);
+  $('mBes').textContent = fmt(besoin);
 
-  // Métriques
-  const capEl = $('mCapacity'); capEl.textContent = fmt(capacity); capEl.style.color='#fff';
-  const besEl = $('mBesoin');   besEl.textContent = fmt(besoin);   besEl.style.color='#fff';
-
-  // AI
-  $('aiCard').style.display = 'block';
-  $('aiSpinner').style.display = 'inline-block';
-  $('aiContent').textContent = '';
-
-  await generateAI(capacity, besoin, mois, isGreen);
-}
-
-// ─── AI ────────────────────────────────────────────────────────────────────
-async function generateAI(capacity, besoin, mois, isGreen) {
-  const prompt = `Tu es le conseiller financier calme et bienveillant d'AB RENOV 35, une entreprise de rénovation.
-Génère un commentaire quotidien de trésorerie en 2 phrases max. Style : calme, factuel, professionnel, rassurant, jamais anxiogène.
-
-Données :
-- Capacité financière élargie : ${fmt(capacity)}
-- Besoin mensuel : ${fmt(besoin)}
-- Couverture : ${mois.toFixed(1)} mois
-- Statut : ${isGreen ? 'VERT' : 'ROUGE'}
-
-${isGreen
-  ? 'Commentaire positif et rassurant. Mets en avant les ' + mois.toFixed(1) + ' mois de couverture comme indicateur clé. Termine par une note apaisante.'
-  : 'Factuel et calme. Indique qu\'une vérification est recommandée sans dramatiser.'}`;
+  // Commentaire IA
+  const aiCard = $('aiCard');
+  aiCard.style.display = 'block';
+  $('aiTxt').innerHTML = '<span class="spinner"></span> Analyse en cours…';
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
+        model: 'claude-sonnet-4-6', max_tokens: 1000,
+        messages: [{ role: 'user', content:
+          `Tu es conseiller financier bienveillant d'AB RENOV 35. Commentaire trésorerie en 2 phrases max, calme, factuel, rassurant.
+Capacité élargie : ${fmt(capacity)} | Besoin mensuel : ${fmt(besoin)} | Couverture : ${mois.toFixed(1)} mois | Statut : ${isGreen ? 'EXCÉDENTAIRE' : 'SOUS TENSION'}.
+${isGreen ? 'Mets en avant les '+mois.toFixed(1)+' mois. Termine positivement.' : 'Factuel et non alarmiste. Recommande une vérification.'}`
+        }]
       })
     });
     const data = await res.json();
-    const text = data.content?.map(b => b.text || '').join('') || '';
-    $('aiSpinner').style.display = 'none';
-    $('aiContent').textContent = text || fallback(capacity, besoin, mois, isGreen);
+    $('aiTxt').textContent = data.content?.map(b => b.text||'').join('') || fallback(capacity,besoin,mois,isGreen);
   } catch(e) {
-    $('aiSpinner').style.display = 'none';
-    $('aiContent').textContent = fallback(capacity, besoin, mois, isGreen);
+    $('aiTxt').textContent = fallback(capacity, besoin, mois, isGreen);
   }
 }
 
 function fallback(capacity, besoin, mois, isGreen) {
-  if (isGreen) return `Votre capacité financière élargie est de ${fmt(capacity)}, soit ${mois.toFixed(1)} mois de couverture. Aucun signal d'alerte identifié aujourd'hui.`;
-  return `Votre capacité financière élargie (${fmt(capacity)}) est inférieure au besoin mensuel de référence. Une vérification est recommandée.`;
+  return isGreen
+    ? `Capacité élargie de ${fmt(capacity)}, soit ${mois.toFixed(1)} mois de couverture. Aucun signal d'alerte identifié.`
+    : `Capacité élargie de ${fmt(capacity)}, inférieure au besoin mensuel de ${fmt(besoin)}. Une vérification est recommandée.`;
 }
 
-// ─── INIT ──────────────────────────────────────────────────────────────────
+// INIT
 loadLocal();
-loadFromGAS();
+loadGAS();
 </script>
 </body>
 </html>
