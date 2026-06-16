@@ -416,17 +416,15 @@ async function loadFromGAS() {
 async function saveAll() {
   saveLocal();
   try {
-    await fetch(GAS_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        action: 'save',
-        courant:   $('courant').value,
-        epargne:   $('epargne').value,
-        creances:  $('creances').value,
-        decouvert: $('decouvert').value,
-        besoin:    $('besoin').value
-      })
+    const params = new URLSearchParams({
+      action: 'save',
+      courant:   $('courant').value,
+      epargne:   $('epargne').value,
+      creances:  $('creances').value,
+      decouvert: $('decouvert').value,
+      besoin:    $('besoin').value
     });
+    await fetch(GAS_URL + '?' + params.toString(), {mode:'no-cors'});
     showSyncStatus('✓ Données sauvegardées');
   } catch(e) {
     showSyncStatus('⚠ Sauvegarde locale uniquement', true);
