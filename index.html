@@ -377,19 +377,74 @@
 const fmt = n => new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0}).format(n);
 const $ = id => document.getElementById(id);
 
+// ─── CONFIG ────────────────────────────────────────────────────────────────
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbykyQJ0L8IJ0USn2xDbWB12Wdcap0-mgiuA0ymnvtAQfiDKKksa1JuooevID_NHBjc0/exec';
+
 // ─── PERSISTENCE ───────────────────────────────────────────────────────────
-function loadSaved() {
+function loadLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
    ['besoin','ist_besoin'],['decouvert','ist_decouvert']].forEach(([id, key]) => {
     const v = localStorage.getItem(key);
-    if (v !== null) $(id).value = v;
+    if (v !== null && v !== '') $(id).value = v;
   });
 }
-function saveAll() {
+function saveLocal() {
   [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
    ['besoin','ist_besoin'],['decouvert','ist_decouvert']].forEach(([id, key]) => {
     localStorage.setItem(key, $(id).value);
   });
+}
+
+async function loadFromGAS() {
+  try {
+    const res = await fetch(GAS_URL);
+    const data = await res.json();
+    if (data.courant !== '' && data.courant !== undefined) {
+      [['courant',data.courant],['epargne',data.epargne],['creances',data.creances],
+       ['decouvert',data.decouvert],['besoin',data.besoin]].forEach(([id, val]) => {
+        if (val !== '' && val !== null && val !== undefined) $(id).value = val;
+      });
+      saveLocal();
+      showSyncStatus('✓ Données synchronisées');
+    }
+  } catch(e) {
+    loadLocal();
+    showSyncStatus('⚠ Mode hors ligne', true);
+  }
+}
+
+async function saveAll() {
+  saveLocal();
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'save',
+        courant:   $('courant').value,
+        epargne:   $('epargne').value,
+        creances:  $('creances').value,
+        decouvert: $('decouvert').value,
+        besoin:    $('besoin').value
+      })
+    });
+    showSyncStatus('✓ Données sauvegardées');
+  } catch(e) {
+    showSyncStatus('⚠ Sauvegarde locale uniquement', true);
+  }
+}
+
+function showSyncStatus(msg, warn=false) {
+  let el = $('syncStatus');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'syncStatus';
+    el.style.cssText = 'text-align:center;font-size:0.62rem;padding:3px 0;transition:opacity 1s;';
+    document.querySelector('.body').prepend(el);
+  }
+  el.style.color = warn ? '#ffb347' : '#7dff9e';
+  el.style.opacity = '1';
+  el.textContent = msg;
+  setTimeout(() => { el.style.opacity = '0'; }, 3000);
 }
 
 // ─── CALCULATE ─────────────────────────────────────────────────────────────
@@ -471,7 +526,8 @@ function fallback(capacity, besoin, mois, isGreen) {
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
-loadSaved();
+loadLocal();
+loadFromGAS();
 </script>
 </body>
 </html>
