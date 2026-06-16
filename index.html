@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Indice de Sérénité Trésorerie — AB RENOV 35</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sérénité Trésorerie — AB RENOV 35</title>
 <style>
   :root {
     --navy: #162D49;
@@ -12,133 +12,202 @@
     --lavande-light: #C8BFD9;
     --white: #FFFFFF;
     --green: #2ECC71;
-    --green-dark: #219150;
-    --green-bg: #E8F8EF;
+    --green-dark: #1aab58;
     --red: #E74C3C;
-    --red-dark: #B03A2E;
-    --red-bg: #FDE8E6;
-    --text-main: #1a1a2e;
+    --red-dark: #c0392b;
     --text-muted: #6B7A8D;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --shadow: 0 4px 24px rgba(22,45,73,0.10);
-    --shadow-lg: 0 8px 40px rgba(22,45,73,0.16);
+    --radius: 14px;
+    --radius-sm: 9px;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
+  html, body {
+    height: 100%;
+    overflow: hidden;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--beige);
-    color: var(--text-main);
-    min-height: 100vh;
+    background: var(--navy);
+    color: #fff;
+  }
+
+  /* LAYOUT : header fixe + contenu flex */
+  .app {
     display: flex;
     flex-direction: column;
+    height: 100dvh;
+    max-width: 480px;
+    margin: 0 auto;
   }
 
   /* HEADER */
-  header {
+  .header {
+    flex-shrink: 0;
     background: var(--navy);
-    padding: 0 24px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(22,45,73,0.25);
+    padding: 10px 16px 6px;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--lavande), var(--navy)) 1;
   }
-  .header-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .logo {
+  .logo-main {
     font-family: 'Century Gothic', 'Futura', 'Trebuchet MS', sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    color: var(--white);
-    letter-spacing: 0.05em;
-    line-height: 1.1;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    color: #fff;
   }
-  .logo span {
-    display: block;
-    font-size: 0.65rem;
-    font-weight: 400;
+  .logo-sub {
+    font-size: 0.6rem;
     color: var(--lavande-light);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin-top: 2px;
-  }
-  .header-band {
-    height: 4px;
-    background: linear-gradient(90deg, var(--lavande) 0%, var(--navy) 100%);
+    margin-top: 1px;
   }
 
-  /* MAIN */
-  main {
+  /* BODY SCROLL ZONE */
+  .body {
     flex: 1;
-    max-width: 900px;
-    margin: 0 auto;
-    width: 100%;
-    padding: 28px 20px 60px;
+    overflow-y: auto;
+    padding: 10px 12px 12px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .page-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--navy);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .page-subtitle {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  /* CARD */
-  .card {
-    background: var(--white);
+  /* INDICATEUR PRINCIPAL */
+  .indicator-card {
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 24px;
+    padding: 16px 12px 14px;
+    text-align: center;
+    transition: background 0.4s;
+    position: relative;
+    overflow: hidden;
   }
-  .card-title {
-    font-size: 0.75rem;
+  .indicator-card.green { background: linear-gradient(135deg, #1aab58, #2ECC71); }
+  .indicator-card.red   { background: linear-gradient(135deg, #c0392b, #E74C3C); }
+  .indicator-card.neutral { background: #1e3d63; }
+
+  .ind-status {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+
+  /* MOIS : élément star */
+  .ind-mois-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    margin: 2px 0 4px;
+  }
+  .ind-mois-val {
+    font-size: 4.2rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .ind-mois-unit {
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.85;
+    padding-bottom: 6px;
+  }
+  .ind-mois-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .ind-icon {
+    font-size: 1.6rem;
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  /* MÉTRIQUES SOUS L'INDICATEUR */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .metric {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .metric-val {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+  }
+  .metric-lbl {
+    font-size: 0.6rem;
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  /* COMMENTAIRE IA */
+  .ai-card {
+    background: rgba(255,255,255,0.07);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    border-left: 3px solid var(--lavande);
+  }
+  .ai-lbl {
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--lavande);
-    margin-bottom: 18px;
+    color: var(--lavande-light);
+    margin-bottom: 5px;
+  }
+  .ai-text {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.88);
+    font-style: italic;
   }
 
-  /* FORM */
+  /* FORMULAIRE */
+  .form-card {
+    background: rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 12px;
+  }
+  .form-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--lavande-light);
+    margin-bottom: 10px;
+  }
   .fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 8px;
   }
-  @media (max-width: 560px) {
-    .fields { grid-template-columns: 1fr; }
-  }
-  .field-group {
+  .field {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 3px;
   }
-  .field-group label {
-    font-size: 0.78rem;
+  .field.full { grid-column: span 2; }
+  .field label {
+    font-size: 0.62rem;
     font-weight: 600;
-    color: var(--navy);
-    letter-spacing: 0.02em;
-  }
-  .field-group .field-hint {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-top: -2px;
+    color: var(--lavande-light);
+    letter-spacing: 0.04em;
   }
   .input-wrap {
     position: relative;
@@ -147,21 +216,21 @@
   }
   .input-wrap span {
     position: absolute;
-    right: 12px;
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    right: 10px;
+    font-size: 0.8rem;
+    color: var(--lavande-light);
     pointer-events: none;
     font-weight: 500;
   }
   input[type="number"] {
     width: 100%;
-    padding: 11px 36px 11px 14px;
-    border: 1.5px solid #DDD5CC;
-    border-radius: var(--radius-sm);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-    background: #FDFAF7;
+    padding: 9px 28px 9px 10px;
+    border: 1.5px solid rgba(164,149,195,0.3);
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255,255,255,0.08);
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
     -moz-appearance: textfield;
@@ -170,342 +239,212 @@
   input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
   input[type="number"]:focus {
     border-color: var(--lavande);
-    box-shadow: 0 0 0 3px rgba(164,149,195,0.18);
-    background: #FFF;
+    box-shadow: 0 0 0 3px rgba(164,149,195,0.2);
+    background: rgba(255,255,255,0.12);
   }
+  input[type="number"]::placeholder { color: rgba(255,255,255,0.3); font-weight: 400; }
 
   .btn-calc {
-    margin-top: 8px;
+    margin-top: 10px;
     width: 100%;
-    padding: 15px;
-    background: var(--navy);
-    color: var(--white);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    padding: 13px;
+    background: var(--lavande);
+    color: var(--navy);
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
   }
-  .btn-calc:hover { background: #1e3d63; }
+  .btn-calc:hover { background: #b8aad4; }
   .btn-calc:active { transform: scale(0.98); }
 
-  /* INDICATOR */
-  #result-section { display: none; }
-
-  .indicator-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    padding: 8px 0 4px;
-  }
-  .indicator-circle {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    line-height: 1;
-    box-shadow: 0 6px 32px rgba(0,0,0,0.12);
-    transition: all 0.4s;
-    position: relative;
-  }
-  .indicator-circle.green {
-    background: linear-gradient(135deg, #2ECC71, #1aab58);
-    color: white;
-    box-shadow: 0 8px 36px rgba(46,204,113,0.35);
-  }
-  .indicator-circle.red {
-    background: linear-gradient(135deg, #E74C3C, #c0392b);
-    color: white;
-    box-shadow: 0 8px 36px rgba(231,76,60,0.35);
-  }
-  .status-label {
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .status-label.green { color: var(--green-dark); }
-  .status-label.red { color: var(--red-dark); }
-
-  /* METRICS */
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-top: 4px;
-  }
-  @media (max-width: 480px) {
-    .metrics { grid-template-columns: 1fr 1fr; }
-    .metrics .metric:last-child { grid-column: span 2; }
-  }
-  .metric {
-    border-radius: var(--radius-sm);
-    padding: 14px 12px;
+  /* PLACEHOLDER état initial */
+  .placeholder {
     text-align: center;
-    background: var(--beige);
+    padding: 10px 0 4px;
+    opacity: 0.4;
+    font-size: 0.8rem;
   }
-  .metric-value {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--navy);
-    line-height: 1;
-  }
-  .metric-label {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 5px;
-  }
-
-  /* AI MESSAGE */
-  .ai-message {
-    border-left: 3px solid var(--lavande);
-    padding: 14px 16px;
-    background: linear-gradient(90deg, rgba(164,149,195,0.06) 0%, transparent 100%);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    font-size: 0.88rem;
-    line-height: 1.65;
-    color: var(--text-main);
-    font-style: italic;
-  }
-  .ai-label {
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--lavande);
-    margin-bottom: 8px;
-    font-style: normal;
-  }
-
-
-  /* CHART */
-
 
   /* SPINNER */
   .spinner {
     display: inline-block;
-    width: 16px; height: 16px;
+    width: 12px; height: 12px;
     border: 2px solid rgba(255,255,255,0.3);
     border-top-color: white;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     vertical-align: middle;
-    margin-right: 8px;
+    margin-right: 6px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
+    * { animation: none !important; transition: none !important; }
   }
 </style>
 </head>
 <body>
+<div class="app">
 
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      AB RENOV 35
-      <span>Indice de Sérénité Trésorerie</span>
-    </div>
-  </div>
-</header>
-<div class="header-band"></div>
-
-<main>
-  <div>
-    <div class="page-title">Indice de Sérénité Trésorerie</div>
-    <div class="page-subtitle">Renseignez vos données pour obtenir un indicateur objectif de votre situation.</div>
+  <div class="header">
+    <div class="logo-main">AB RENOV 35</div>
+    <div class="logo-sub">Indice de Sérénité Trésorerie</div>
   </div>
 
-  <!-- SAISIE -->
-  <div class="card">
-    <div class="card-title">Données du jour</div>
-    <div class="fields">
-      <div class="field-group">
-        <label for="courant">Solde compte courant</label>
-        <div class="input-wrap">
-          <input type="number" id="courant" placeholder="0" step="100">
-          <span>€</span>
-        </div>
-      </div>
-      <div class="field-group">
-        <label for="epargne">Solde compte épargne</label>
-        <div class="input-wrap">
-          <input type="number" id="epargne" placeholder="0" step="100">
-          <span>€</span>
-        </div>
-      </div>
-      <div class="field-group">
-        <label for="creances">Créances certaines</label>
-        <div class="field-hint">Factures émises non douteuses</div>
-        <div class="input-wrap">
-          <input type="number" id="creances" placeholder="0" step="100">
-          <span>€</span>
-        </div>
+  <div class="body">
 
+    <!-- INDICATEUR -->
+    <div class="indicator-card neutral" id="indicCard">
+      <div class="ind-status" id="indStatus">En attente de saisie</div>
+      <span class="ind-icon" id="indIcon">💼</span>
+      <div class="ind-mois-wrap">
+        <div class="ind-mois-val" id="indMois">—</div>
+        <div class="ind-mois-unit" id="indMoisUnit"></div>
       </div>
-      <div class="field-group">
-        <label for="decouvert">Découvert autorisé</label>
-        <div class="input-wrap">
-          <input type="number" id="decouvert" value="25000" step="500">
-          <span>€</span>
-        </div>
-      </div>
-      <div class="field-group" style="grid-column: span 2 / span 2;">
-        <label for="besoin">Besoin mensuel de référence</label>
-        <div class="field-hint">Mémorisé automatiquement pour la prochaine utilisation</div>
-        <div class="input-wrap">
-          <input type="number" id="besoin" value="70000" step="500">
-          <span>€</span>
-        </div>
-      </div>
-    </div>
-    <button class="btn-calc" id="calcBtn" onclick="calculate()">
-      Calculer l'indice
-    </button>
-  </div>
-
-  <!-- RÉSULTAT -->
-  <div id="result-section">
-    <div class="card">
-      <div class="indicator-wrap">
-        <div class="indicator-circle" id="indicCircle">
-          <span id="indicIcon"></span>
-        </div>
-        <div class="status-label" id="statusLabel"></div>
-      </div>
-
-      <div class="metrics" id="metrics" style="margin-top: 24px;">
+      <div class="ind-mois-label" id="indMoisLabel">mois de couverture</div>
+      <div class="metrics-row" id="metricsRow" style="display:none">
         <div class="metric">
-          <div class="metric-value" id="mCapacity"></div>
-          <div class="metric-label">Capacité élargie</div>
+          <div class="metric-val" id="mCapacity"></div>
+          <div class="metric-lbl">Capacité élargie</div>
         </div>
         <div class="metric">
-          <div class="metric-value" id="mBesoin"></div>
-          <div class="metric-label">Besoin mensuel</div>
-        </div>
-        <div class="metric">
-          <div class="metric-value" id="mMois"></div>
-          <div class="metric-label">Mois de couverture</div>
-        </div>
-      </div>
-
-      <div style="margin-top: 22px;">
-        <div class="ai-label">💬 Commentaire du jour</div>
-        <div class="ai-message" id="aiMessage">
-          <span class="spinner" id="aiSpinner"></span>
-          <span id="aiText">Analyse en cours…</span>
+          <div class="metric-val" id="mBesoin"></div>
+          <div class="metric-lbl">Besoin mensuel</div>
         </div>
       </div>
     </div>
 
+    <!-- COMMENTAIRE IA -->
+    <div class="ai-card" id="aiCard" style="display:none">
+      <div class="ai-lbl">💬 Commentaire du jour</div>
+      <div class="ai-text" id="aiText">
+        <span class="spinner" id="aiSpinner" style="display:none"></span>
+        <span id="aiContent"></span>
+      </div>
+    </div>
 
-  </div>
-</main>
+    <!-- FORMULAIRE -->
+    <div class="form-card">
+      <div class="form-title">Saisie des données</div>
+      <div class="fields">
+        <div class="field">
+          <label>Compte courant</label>
+          <div class="input-wrap">
+            <input type="number" id="courant" placeholder="0" step="100" inputmode="decimal">
+            <span>€</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Compte épargne</label>
+          <div class="input-wrap">
+            <input type="number" id="epargne" placeholder="0" step="100" inputmode="decimal">
+            <span>€</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Créances certaines</label>
+          <div class="input-wrap">
+            <input type="number" id="creances" placeholder="0" step="100" inputmode="decimal">
+            <span>€</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Découvert autorisé</label>
+          <div class="input-wrap">
+            <input type="number" id="decouvert" value="25000" step="500" inputmode="decimal">
+            <span>€</span>
+          </div>
+        </div>
+        <div class="field full">
+          <label>Besoin mensuel de référence</label>
+          <div class="input-wrap">
+            <input type="number" id="besoin" value="70000" step="500" inputmode="decimal">
+            <span>€</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-calc" onclick="calculate()">Calculer l'indice</button>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /app -->
 
 <script>
-// ─── UTILS ─────────────────────────────────────────────────────────────────
 const fmt = n => new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0}).format(n);
-const fmtK = n => {
-  if (Math.abs(n) >= 1000) return (n/1000).toFixed(0) + ' k€';
-  return fmt(n);
-};
 const $ = id => document.getElementById(id);
 
 // ─── PERSISTENCE ───────────────────────────────────────────────────────────
-function loadBesoin() {
-  const saved = localStorage.getItem('ist_besoin');
-  if (saved) $('besoin').value = saved;
-  const courant = localStorage.getItem('ist_courant');
-  if (courant) $('courant').value = courant;
-  const epargne = localStorage.getItem('ist_epargne');
-  if (epargne) $('epargne').value = epargne;
-  const creances = localStorage.getItem('ist_creances');
-  if (creances) $('creances').value = creances;
+function loadSaved() {
+  [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
+   ['besoin','ist_besoin'],['decouvert','ist_decouvert']].forEach(([id, key]) => {
+    const v = localStorage.getItem(key);
+    if (v !== null) $(id).value = v;
+  });
 }
-function saveSettings() {
-  localStorage.setItem('ist_besoin', $('besoin').value);
-  localStorage.setItem('ist_courant', $('courant').value);
-  localStorage.setItem('ist_epargne', $('epargne').value);
-  localStorage.setItem('ist_creances', $('creances').value);
-}
-function loadHistory() {
-  return JSON.parse(localStorage.getItem('ist_history') || '[]');
-}
-function saveHistory(h) {
-  localStorage.setItem('ist_history', JSON.stringify(h));
+function saveAll() {
+  [['courant','ist_courant'],['epargne','ist_epargne'],['creances','ist_creances'],
+   ['besoin','ist_besoin'],['decouvert','ist_decouvert']].forEach(([id, key]) => {
+    localStorage.setItem(key, $(id).value);
+  });
 }
 
 // ─── CALCULATE ─────────────────────────────────────────────────────────────
 async function calculate() {
-  const courant   = parseFloat($('courant').value)  || 0;
-  const epargne   = parseFloat($('epargne').value)  || 0;
-  const creances  = parseFloat($('creances').value) || 0;
+  const courant   = parseFloat($('courant').value)   || 0;
+  const epargne   = parseFloat($('epargne').value)   || 0;
+  const creances  = parseFloat($('creances').value)  || 0;
   const decouvert = parseFloat($('decouvert').value) || 0;
-  const besoin    = parseFloat($('besoin').value)   || 70000;
+  const besoin    = parseFloat($('besoin').value)    || 70000;
 
-  saveSettings();
+  saveAll();
 
   const capacity = courant + epargne + decouvert + creances;
   const mois     = besoin > 0 ? capacity / besoin : 0;
   const isGreen  = capacity >= besoin;
 
-  // Show result section
-  $('result-section').style.display = 'block';
-  $('result-section').scrollIntoView({behavior:'smooth', block:'start'});
+  // Indicateur
+  const card = $('indicCard');
+  card.className = 'indicator-card ' + (isGreen ? 'green' : 'red');
+  $('indStatus').textContent = isGreen ? '✅ SITUATION VERTE' : '🔴 SITUATION ROUGE';
+  $('indIcon').textContent = isGreen ? '✓' : '!';
+  $('indIcon').style.fontSize = '2rem';
 
-  // Indicator
-  const circle = $('indicCircle');
-  circle.className = 'indicator-circle ' + (isGreen ? 'green' : 'red');
-  $('indicIcon').textContent = isGreen ? '✓' : '!';
-  $('statusLabel').className = 'status-label ' + (isGreen ? 'green' : 'red');
-  $('statusLabel').textContent = isGreen ? 'VERT' : 'ROUGE';
+  // MOIS en grand
+  $('indMois').textContent = mois.toFixed(1);
+  $('indMoisUnit').textContent = 'mois';
+  $('indMoisLabel').textContent = 'de couverture de trésorerie';
 
-  // Metrics
+  // Métriques
+  $('metricsRow').style.display = 'grid';
   $('mCapacity').textContent = fmt(capacity);
   $('mBesoin').textContent   = fmt(besoin);
-  $('mMois').textContent     = mois.toFixed(1) + ' mois';
 
   // AI
+  $('aiCard').style.display = 'block';
   $('aiSpinner').style.display = 'inline-block';
-  $('aiText').textContent = 'Analyse en cours…';
+  $('aiContent').textContent = '';
 
-  const entry = {
-    date: new Date().toISOString(),
-    capacity, besoin, mois: parseFloat(mois.toFixed(2)), status: isGreen ? 'VERT' : 'ROUGE'
-  };
-
-  await generateAIMessage(capacity, besoin, mois, isGreen, entry.date);
+  await generateAI(capacity, besoin, mois, isGreen);
 }
 
-// ─── AI MESSAGE ────────────────────────────────────────────────────────────
-async function generateAIMessage(capacity, besoin, mois, isGreen, dateISO) {
-  const dateStr = new Date(dateISO).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'});
+// ─── AI ────────────────────────────────────────────────────────────────────
+async function generateAI(capacity, besoin, mois, isGreen) {
+  const prompt = `Tu es le conseiller financier calme et bienveillant d'AB RENOV 35, une entreprise de rénovation.
+Génère un commentaire quotidien de trésorerie en 2 phrases max. Style : calme, factuel, professionnel, rassurant, jamais anxiogène.
 
-  const prompt = `Tu es le conseiller financier calme et bienveillant d'une entreprise de rénovation, AB RENOV 35.
-Génère un commentaire quotidien de trésorerie. Ton style : calme, factuel, professionnel, rassurant, jamais anxiogène, jamais catastrophiste. 2 à 3 phrases maximum. Ne commence pas par "Bonjour" ou autre formule de politesse.
-
-Données du ${dateStr} :
+Données :
 - Capacité financière élargie : ${fmt(capacity)}
-- Besoin mensuel de référence : ${fmt(besoin)}
+- Besoin mensuel : ${fmt(besoin)}
 - Couverture : ${mois.toFixed(1)} mois
-- Statut : ${isGreen ? 'VERT (situation saine)' : 'ROUGE (capacité inférieure au besoin mensuel)'}
+- Statut : ${isGreen ? 'VERT' : 'ROUGE'}
 
 ${isGreen
-  ? "Rédige un commentaire positif et rassurant. Cite les chiffres clés. Termine par une phrase indiquant qu'aucun signal d'alerte n'est identifié."
-  : "Rédige un commentaire factuel, calme et non alarmiste indiquant qu'une vérification de la situation est recommandée. Ne pas dramatiser."
-}`;
+  ? 'Commentaire positif et rassurant. Mets en avant les ' + mois.toFixed(1) + ' mois de couverture comme indicateur clé. Termine par une note apaisante.'
+  : 'Factuel et calme. Indique qu\'une vérification est recommandée sans dramatiser.'}`;
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -520,23 +459,20 @@ ${isGreen
     const data = await res.json();
     const text = data.content?.map(b => b.text || '').join('') || '';
     $('aiSpinner').style.display = 'none';
-    $('aiText').textContent = text || fallbackMessage(capacity, besoin, mois, isGreen);
+    $('aiContent').textContent = text || fallback(capacity, besoin, mois, isGreen);
   } catch(e) {
     $('aiSpinner').style.display = 'none';
-    $('aiText').textContent = fallbackMessage(capacity, besoin, mois, isGreen);
+    $('aiContent').textContent = fallback(capacity, besoin, mois, isGreen);
   }
 }
 
-function fallbackMessage(capacity, besoin, mois, isGreen) {
-  if (isGreen) {
-    return `Données du jour : votre capacité financière élargie est de ${fmt(capacity)}. Avec un besoin mensuel de référence de ${fmt(besoin)}, cela représente ${mois.toFixed(1)} mois de couverture. La situation est verte. Aucun signal d'alerte n'est identifié aujourd'hui.`;
-  } else {
-    return `Données du jour : votre capacité financière élargie est de ${fmt(capacity)}, inférieure au besoin mensuel de référence de ${fmt(besoin)}. Une vérification de la situation est recommandée.`;
-  }
+function fallback(capacity, besoin, mois, isGreen) {
+  if (isGreen) return `Votre capacité financière élargie est de ${fmt(capacity)}, soit ${mois.toFixed(1)} mois de couverture. Aucun signal d'alerte identifié aujourd'hui.`;
+  return `Votre capacité financière élargie (${fmt(capacity)}) est inférieure au besoin mensuel de référence. Une vérification est recommandée.`;
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
-loadBesoin();
+loadSaved();
 </script>
 </body>
 </html>
