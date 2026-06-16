@@ -19,9 +19,9 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .body { flex: 1; overflow-y: auto; padding: 7px 10px 8px; display: flex; flex-direction: column; gap: 7px; }
 
 /* INDICATEUR */
-.ind { border-radius: 12px; padding: 12px 14px; border: 1.5px solid rgba(255,255,255,0.1); display: none; }
-.ind.green { background: rgba(255,255,255,0.04); border-color: #2ECC71; border-width: 2px; }
-.ind.red   { background: rgba(255,255,255,0.04); border-color: #E74C3C; border-width: 2px; }
+.ind { border-radius: 12px; padding: 12px 14px; border: 1.5px solid rgba(255,255,255,0.1); display: none; min-height: 110px; }
+.ind.green { background: rgba(255,255,255,0.04); border-color: #2ECC71; border-width: 2px; display: flex; flex-direction: column; }
+.ind.red   { background: rgba(255,255,255,0.04); border-color: #E74C3C; border-width: 2px; display: flex; flex-direction: column; }
 
 .ind-header { display: flex; align-items: center; margin-bottom: 10px; }
 .ind-statut { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
@@ -34,8 +34,8 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .led.vert.on  { box-shadow: 0 0 10px #2ECC71; }
 .led.rouge.on { box-shadow: 0 0 10px #E74C3C; }
 
-.ind-body { display: flex; align-items: stretch; gap: 0; width: 100%; }
-.ind-mois { flex: 0 0 30%; padding-right: 14px; border-right: 1px solid rgba(255,255,255,0.2); text-align: center; display: flex; flex-direction: column; justify-content: center; }
+.ind-body { display: flex; align-items: stretch; gap: 0; width: 100%; flex: 1; min-height: 80px; }
+.ind-mois { flex: 0 0 28%; padding-right: 14px; border-right: 1px solid rgba(255,255,255,0.2); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .ind-mois-val { font-size: 2.8rem; font-weight: 900; line-height: 1; letter-spacing: -0.03em; }
 .ind.green .ind-mois-val { color: #2ECC71; }
 .ind.red   .ind-mois-val { color: #E74C3C; }
@@ -43,7 +43,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .ind-mois-lbl { font-size: 0.58rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
 
 .ind-metrics { flex: 1; padding-left: 14px; display: flex; flex-direction: column; justify-content: space-evenly; }
-.ind-metric-lbl { font-size: 0.6rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; font-weight: 600; }
+.ind-metric-lbl { font-size: 0.62rem; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; font-weight: 600; }
 .ind-metric-val { font-size: 1.25rem; font-weight: 900; color: #ffffff; letter-spacing: -0.02em; }
 
 /* COMMENTAIRE */
