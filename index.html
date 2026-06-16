@@ -393,27 +393,10 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .btn-excel {
-    margin-top: 8px;
-    width: 100%;
-    padding: 8px 12px;
-    background: #F3EAE2;
-    color: #162D49;
-    font-size: 0.78rem;
-    font-weight: 600;
-    border: 1.5px dashed #A495C3;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-  }
-  .btn-excel:hover { background: #e8ddd4; border-style: solid; }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -458,9 +441,7 @@
           <input type="number" id="creances" placeholder="0" step="100">
           <span>€</span>
         </div>
-        <button class="btn-excel" onclick="document.getElementById('excelInput').click()">📂 Importer depuis Excel (F4)</button>
-        <input type="file" id="excelInput" accept=".xlsx,.xls" style="display:none" onchange="readExcelF4(this)">
-        <div id="excelStatus" style="font-size:0.72rem;margin-top:4px;display:none;"></div>
+
       </div>
       <div class="field-group">
         <label for="decouvert">Découvert autorisé</label>
@@ -555,11 +536,14 @@ function loadBesoin() {
   if (courant) $('courant').value = courant;
   const epargne = localStorage.getItem('ist_epargne');
   if (epargne) $('epargne').value = epargne;
+  const creances = localStorage.getItem('ist_creances');
+  if (creances) $('creances').value = creances;
 }
 function saveSettings() {
   localStorage.setItem('ist_besoin', $('besoin').value);
   localStorage.setItem('ist_courant', $('courant').value);
   localStorage.setItem('ist_epargne', $('epargne').value);
+  localStorage.setItem('ist_creances', $('creances').value);
 }
 function loadHistory() {
   return JSON.parse(localStorage.getItem('ist_history') || '[]');
@@ -812,36 +796,6 @@ function drawChart() {
     ctx.fillStyle = '#6B7A8D';
     ctx.fillText(l, x-4, ly+8);
   });
-}
-
-// ─── EXCEL IMPORT ──────────────────────────────────────────────────────────
-async function readExcelF4(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const status = document.getElementById('excelStatus');
-  status.style.display = 'block';
-  status.style.color = '#A495C3';
-  status.textContent = 'Lecture du fichier…';
-
-  try {
-    const buffer = await file.arrayBuffer();
-    const wb = XLSX.read(buffer, {type:'array'});
-    // Try active sheet first, then PLAN 2026, then first sheet
-    let ws = wb.Sheets['PLAN 2026'] || wb.Sheets[wb.SheetNames[0]];
-    const cell = ws['F4'];
-    if (!cell) throw new Error('Cellule F4 introuvable');
-    const val = parseFloat(cell.v);
-    if (isNaN(val)) throw new Error('Valeur non numérique en F4');
-    document.getElementById('creances').value = Math.round(val);
-    status.style.color = '#219150';
-    status.textContent = '✓ F4 importée : ' + fmt(val);
-    // Reset input so same file can be re-imported
-    input.value = '';
-  } catch(e) {
-    status.style.color = '#B03A2E';
-    status.textContent = '✗ Erreur : ' + e.message;
-    input.value = '';
-  }
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
