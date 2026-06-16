@@ -288,97 +288,9 @@
     font-style: normal;
   }
 
-  /* HISTORY */
-  .history-empty {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    padding: 16px 0;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8rem;
-  }
-  thead th {
-    text-align: left;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--lavande);
-    padding: 0 8px 10px;
-    border-bottom: 1.5px solid #EAE3DB;
-  }
-  tbody tr {
-    border-bottom: 1px solid #F0EAE2;
-    transition: background 0.15s;
-  }
-  tbody tr:hover { background: #FAF6F2; }
-  tbody td {
-    padding: 9px 8px;
-    color: var(--text-main);
-    font-weight: 500;
-  }
-  .badge {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .badge.green { background: var(--green-bg); color: var(--green-dark); }
-  .badge.red { background: var(--red-bg); color: var(--red-dark); }
-
-  .btn-clear {
-    margin-top: 14px;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    background: none;
-    border: 1px solid #DDD5CC;
-    border-radius: 20px;
-    padding: 5px 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-clear:hover { border-color: var(--red); color: var(--red-dark); }
 
   /* CHART */
-  #chartCanvas {
-    width: 100%;
-    height: 200px;
-  }
 
-  /* TABS */
-  .tabs {
-    display: flex;
-    gap: 4px;
-    background: #EDE5DC;
-    border-radius: 10px;
-    padding: 4px;
-    margin-bottom: 18px;
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 8px;
-    border: none;
-    border-radius: 7px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    background: transparent;
-    color: var(--text-muted);
-    transition: all 0.2s;
-  }
-  .tab-btn.active {
-    background: var(--white);
-    color: var(--navy);
-    box-shadow: 0 2px 8px rgba(22,45,73,0.08);
-  }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
 
   /* SPINNER */
   .spinner {
@@ -498,24 +410,7 @@
       </div>
     </div>
 
-    <!-- HISTORIQUE + GRAPHIQUE -->
-    <div class="card">
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('history')">Historique</button>
-        <button class="tab-btn" onclick="switchTab('chart')">Évolution</button>
-      </div>
 
-      <div class="tab-content active" id="tab-history">
-        <div id="historyContent"></div>
-        <div style="text-align:right">
-          <button class="btn-clear" onclick="clearHistory()">Effacer l'historique</button>
-        </div>
-      </div>
-
-      <div class="tab-content" id="tab-chart">
-        <canvas id="chartCanvas"></canvas>
-      </div>
-    </div>
   </div>
 </main>
 
@@ -550,16 +445,6 @@ function loadHistory() {
 }
 function saveHistory(h) {
   localStorage.setItem('ist_history', JSON.stringify(h));
-}
-
-// ─── TABS ──────────────────────────────────────────────────────────────────
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => {
-    b.classList.toggle('active', (i===0 && tab==='history') || (i===1 && tab==='chart'));
-  });
-  $('tab-history').classList.toggle('active', tab==='history');
-  $('tab-chart').classList.toggle('active', tab==='chart');
-  if (tab === 'chart') drawChart();
 }
 
 // ─── CALCULATE ─────────────────────────────────────────────────────────────
@@ -600,8 +485,6 @@ async function calculate() {
     date: new Date().toISOString(),
     capacity, besoin, mois: parseFloat(mois.toFixed(2)), status: isGreen ? 'VERT' : 'ROUGE'
   };
-  addToHistory(entry);
-  renderHistory();
 
   await generateAIMessage(capacity, besoin, mois, isGreen, entry.date);
 }
@@ -652,171 +535,8 @@ function fallbackMessage(capacity, besoin, mois, isGreen) {
   }
 }
 
-// ─── HISTORY ───────────────────────────────────────────────────────────────
-function addToHistory(entry) {
-  const h = loadHistory();
-  h.unshift(entry);
-  if (h.length > 30) h.splice(30);
-  saveHistory(h);
-}
-
-function renderHistory() {
-  const h = loadHistory();
-  const el = $('historyContent');
-  if (!h.length) {
-    el.innerHTML = '<div class="history-empty">Aucun historique disponible.</div>';
-    return;
-  }
-  el.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Capacité</th>
-          <th>Besoin</th>
-          <th>Couverture</th>
-          <th>Statut</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${h.map(r => `
-          <tr>
-            <td>${new Date(r.date).toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'2-digit'})}</td>
-            <td>${fmtK(r.capacity)}</td>
-            <td>${fmtK(r.besoin)}</td>
-            <td>${r.mois.toFixed(1)} m.</td>
-            <td><span class="badge ${r.status === 'VERT' ? 'green' : 'red'}">${r.status}</span></td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>`;
-}
-
-function clearHistory() {
-  if (confirm('Effacer tout l\'historique ?')) {
-    localStorage.removeItem('ist_history');
-    renderHistory();
-    const canvas = $('chartCanvas');
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-  }
-}
-
-// ─── CHART ─────────────────────────────────────────────────────────────────
-function drawChart() {
-  const h = loadHistory().slice().reverse();
-  if (!h.length) return;
-
-  const canvas = $('chartCanvas');
-  const dpr = window.devicePixelRatio || 1;
-  const W = canvas.offsetWidth;
-  const H = 200;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0,0,W,H);
-
-  const PAD = { top:16, right:16, bottom:36, left:52 };
-  const cW = W - PAD.left - PAD.right;
-  const cH = H - PAD.top - PAD.bottom;
-
-  const allVals = h.flatMap(r => [r.capacity, r.besoin]);
-  const minV = Math.min(...allVals) * 0.85;
-  const maxV = Math.max(...allVals) * 1.1;
-
-  const toX = i => PAD.left + (i / Math.max(h.length-1,1)) * cW;
-  const toY = v => PAD.top + (1 - (v - minV)/(maxV - minV)) * cH;
-
-  // Grid
-  ctx.strokeStyle = '#EAE3DB';
-  ctx.lineWidth = 1;
-  for (let i=0; i<=4; i++) {
-    const y = PAD.top + (i/4)*cH;
-    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W-PAD.right, y); ctx.stroke();
-    const v = maxV - (i/4)*(maxV-minV);
-    ctx.fillStyle = '#9CA3AF';
-    ctx.font = '10px system-ui';
-    ctx.textAlign = 'right';
-    ctx.fillText(fmtK(v), PAD.left-6, y+4);
-  }
-
-  // Lines
-  const drawLine = (data, color, dash=[]) => {
-    if (data.length < 1) return;
-    ctx.beginPath();
-    ctx.setLineDash(dash);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2.5;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-    data.forEach((v,i) => {
-      i===0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v));
-    });
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Dots
-    ctx.fillStyle = color;
-    data.forEach((v,i) => {
-      ctx.beginPath();
-      ctx.arc(toX(i), toY(v), 4, 0, Math.PI*2);
-      ctx.fill();
-    });
-  };
-
-  drawLine(h.map(r=>r.capacity), '#162D49');
-  drawLine(h.map(r=>r.besoin), '#A495C3', [6,3]);
-
-  // X labels
-  ctx.fillStyle = '#9CA3AF';
-  ctx.font = '9px system-ui';
-  ctx.textAlign = 'center';
-  const step = Math.max(1, Math.floor(h.length/6));
-  h.forEach((r,i) => {
-    if (i % step === 0 || i === h.length-1) {
-      const d = new Date(r.date);
-      ctx.fillText(`${d.getDate()}/${d.getMonth()+1}`, toX(i), H-PAD.bottom+14);
-    }
-  });
-
-  // Legend
-  const lx = PAD.left + cW - 10;
-  const ly = PAD.top + 6;
-  ctx.font = '10px system-ui';
-  ctx.textAlign = 'right';
-  [[`#162D49`, [], 'Capacité'], [`#A495C3`, [4,2], 'Besoin']].forEach(([c,d,l], i) => {
-    const x = lx - i*95;
-    ctx.strokeStyle = c; ctx.lineWidth = 2; ctx.setLineDash(d);
-    ctx.beginPath(); ctx.moveTo(x-30, ly+4); ctx.lineTo(x-14, ly+4); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#6B7A8D';
-    ctx.fillText(l, x-4, ly+8);
-  });
-}
-
 // ─── INIT ──────────────────────────────────────────────────────────────────
 loadBesoin();
-renderHistory();
-const h = loadHistory();
-if (h.length) {
-  $('result-section').style.display = 'block';
-  const last = h[0];
-  const circle = $('indicCircle');
-  circle.className = 'indicator-circle ' + (last.status==='VERT'?'green':'red');
-  $('indicIcon').textContent = last.status==='VERT'?'✓':'!';
-  $('statusLabel').className = 'status-label ' + (last.status==='VERT'?'green':'red');
-  $('statusLabel').textContent = last.status;
-  $('mCapacity').textContent = fmt(last.capacity);
-  $('mBesoin').textContent   = fmt(last.besoin);
-  $('mMois').textContent     = last.mois.toFixed(1) + ' mois';
-  $('aiSpinner').style.display = 'none';
-  $('aiText').textContent = fallbackMessage(last.capacity, last.besoin, last.mois, last.status==='VERT');
-  renderHistory();
-}
 </script>
 </body>
 </html>
