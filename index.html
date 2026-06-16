@@ -212,17 +212,18 @@
     gap: 8px;
   }
   .ind-metric-val {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #ffffff !important;
     letter-spacing: -0.01em;
+    min-height: 1.2em;
   }
   .ind-metric-lbl {
-    font-size: 0.6rem;
-    color: rgba(255,255,255,0.55);
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.6);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-top: 1px;
+    margin-bottom: 2px;
   }
 
   /* COMMENTAIRE IA */
@@ -448,7 +449,10 @@
 </div><!-- /app -->
 
 <script>
-const fmt = n => new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', minimumFractionDigits:2, maximumFractionDigits:2}).format(n);
+const fmt = n => {
+  const s = new Intl.NumberFormat('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}).format(n);
+  return s + ' €';
+};
 const $ = id => document.getElementById(id);
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────
