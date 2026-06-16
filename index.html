@@ -23,10 +23,11 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .ind.green { background: rgba(255,255,255,0.04); border-color: #2ECC71; border-width: 2px; }
 .ind.red   { background: rgba(255,255,255,0.04); border-color: #E74C3C; border-width: 2px; }
 
-.ind-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.ind-header { display: flex; align-items: center; margin-bottom: 14px; }
 .ind-statut { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
 .ind-leds { display: flex; gap: 8px; }
-.led { width: 16px; height: 16px; border-radius: 50%; opacity: 0.2; }
+.ind-leds-col { display: flex; flex-direction: column; gap: 10px; align-items: center; padding: 0 14px; flex-shrink: 0; }
+.led { width: 18px; height: 18px; border-radius: 50%; opacity: 0.2; flex-shrink: 0; }
 .led.vert  { background: #2ECC71; }
 .led.rouge { background: #E74C3C; }
 .led.on { opacity: 1; box-shadow: 0 0 10px currentColor; }
@@ -85,10 +86,6 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
     <!-- INDICATEUR -->
     <div class="ind" id="ind">
       <div class="ind-header">
-        <div class="ind-leds">
-          <div class="led vert" id="ledVert"></div>
-          <div class="led rouge" id="ledRouge"></div>
-        </div>
         <div class="ind-statut" id="indStatut"></div>
       </div>
       <div class="ind-body">
@@ -96,6 +93,10 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
           <div class="ind-mois-val" id="indMois"></div>
           <div class="ind-mois-unit">mois</div>
           <div class="ind-mois-lbl">de couverture</div>
+        </div>
+        <div class="ind-leds-col">
+          <div class="led vert" id="ledVert"></div>
+          <div class="led rouge" id="ledRouge"></div>
         </div>
         <div class="ind-metrics">
           <div>
