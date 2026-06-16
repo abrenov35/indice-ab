@@ -458,7 +458,7 @@
 </div><!-- /app -->
 
 <script>
-const fmt = n => new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0}).format(n);
+const fmt = n => new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', minimumFractionDigits:2, maximumFractionDigits:2}).format(n);
 const $ = id => document.getElementById(id);
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────
