@@ -531,9 +531,15 @@ const $ = id => document.getElementById(id);
 function loadBesoin() {
   const saved = localStorage.getItem('ist_besoin');
   if (saved) $('besoin').value = saved;
+  const courant = localStorage.getItem('ist_courant');
+  if (courant) $('courant').value = courant;
+  const epargne = localStorage.getItem('ist_epargne');
+  if (epargne) $('epargne').value = epargne;
 }
 function saveSettings() {
   localStorage.setItem('ist_besoin', $('besoin').value);
+  localStorage.setItem('ist_courant', $('courant').value);
+  localStorage.setItem('ist_epargne', $('epargne').value);
 }
 function loadHistory() {
   return JSON.parse(localStorage.getItem('ist_history') || '[]');
