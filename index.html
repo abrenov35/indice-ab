@@ -26,7 +26,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .ind-header { display: flex; align-items: center; margin-bottom: 14px; }
 .ind-statut { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
 .ind-leds { display: flex; gap: 8px; }
-.ind-leds-col { display: flex; flex-direction: column; gap: 10px; align-items: center; padding: 0 14px; flex-shrink: 0; }
+.ind-leds-col { display: flex; flex-direction: column; gap: 10px; align-items: center; padding: 0 14px; flex-shrink: 0; justify-content: center; }
 .led { width: 18px; height: 18px; border-radius: 50%; opacity: 0.2; flex-shrink: 0; }
 .led.vert  { background: #2ECC71; }
 .led.rouge { background: #E74C3C; }
@@ -35,14 +35,14 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .led.rouge.on { box-shadow: 0 0 10px #E74C3C; }
 
 .ind-body { display: flex; align-items: center; gap: 0; }
-.ind-mois { flex: 0 0 auto; padding-right: 16px; border-right: 1px solid rgba(255,255,255,0.15); }
+.ind-mois { flex: 0 0 auto; padding-right: 16px; border-right: 1px solid rgba(255,255,255,0.15); text-align: center; }
 .ind-mois-val { font-size: 2.8rem; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
 .ind.green .ind-mois-val { color: #2ECC71; }
 .ind.red   .ind-mois-val { color: #E74C3C; }
 .ind-mois-unit { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.7); }
 .ind-mois-lbl { font-size: 0.58rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
 
-.ind-metrics { flex: 1; padding-left: 18px; display: flex; flex-direction: column; gap: 14px; }
+.ind-metrics { flex: 1; padding-left: 18px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
 .ind-metric-lbl { font-size: 0.6rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; font-weight: 600; }
 .ind-metric-val { font-size: 1.3rem; font-weight: 900; color: #ffffff; letter-spacing: -0.01em; }
 
