@@ -81,8 +81,8 @@
     position: relative;
     overflow: hidden;
   }
-  .indicator-card.green { background: linear-gradient(135deg, #1aab58, #2ECC71); }
-  .indicator-card.red   { background: linear-gradient(135deg, #c0392b, #E74C3C); }
+  .indicator-card.green { background: rgba(255,255,255,0.06); }
+  .indicator-card.red   { background: rgba(255,255,255,0.06); }
   .indicator-card.neutral { background: #1e3d63; }
 
   .ind-status {
@@ -110,7 +110,10 @@
     letter-spacing: -0.02em;
     color: #fff;
     text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    transition: color 0.4s;
   }
+  .indicator-card.green .ind-mois-val { color: #2ECC71; text-shadow: 0 0 24px rgba(46,204,113,0.5); }
+  .indicator-card.red .ind-mois-val   { color: #E74C3C; text-shadow: 0 0 24px rgba(231,76,60,0.5); }
   .ind-mois-unit {
     font-size: 1.1rem;
     font-weight: 600;
