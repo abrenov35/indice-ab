@@ -27,12 +27,8 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .ind-statut { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
 .ind-leds { display: flex; gap: 8px; }
 .ind-leds-col { display: flex; flex-direction: column; gap: 12px; align-items: center; padding: 0 12px; justify-content: center; border-left: 1px solid rgba(255,255,255,0.15); border-right: 1px solid rgba(255,255,255,0.15); }
-.led { width: 18px; height: 18px; border-radius: 50%; opacity: 0.2; flex-shrink: 0; }
-.led.vert  { background: #2ECC71; }
-.led.rouge { background: #E74C3C; }
-.led.on { opacity: 1; box-shadow: 0 0 10px currentColor; }
-.led.vert.on  { box-shadow: 0 0 10px #2ECC71; }
-.led.rouge.on { box-shadow: 0 0 10px #E74C3C; }
+.led-main { width: 28px; height: 28px; border-radius: 50%; background: #2ECC71; box-shadow: 0 0 14px #2ECC71; }
+.led-main.red { background: #E74C3C; box-shadow: 0 0 14px #E74C3C; }
 
 .ind-body { display: flex; align-items: stretch; width: 100%; flex: 1; min-height: 80px; justify-content: space-between; }
 .ind-mois { flex: 1; padding-right: 12px; border-right: 1px solid rgba(255,255,255,0.2); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -104,8 +100,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
           <div class="ind-mois-lbl">de couverture</div>
         </div>
         <div class="ind-leds-col">
-          <div class="led vert" id="ledVert"></div>
-          <div class="led rouge" id="ledRouge"></div>
+          <div class="led-main" id="ledMain"></div>
         </div>
         <div class="ind-metrics">
           <div>
@@ -258,8 +253,7 @@ async function calculate() {
   });
 
   $('indStatut').textContent = isGreen ? 'TRÉSORERIE EXCÉDENTAIRE' : 'TRÉSORERIE SOUS TENSION';
-  $('ledVert').className  = 'led vert'  + (isGreen  ? ' on' : '');
-  $('ledRouge').className = 'led rouge' + (!isGreen ? ' on' : '');
+  $('ledMain').className = isGreen ? 'led-main' : 'led-main red';
   $('indMois').textContent = mois.toFixed(1);
   $('mCap').textContent = fmt(capacity);
   $('mBes').textContent = fmt(besoin);
