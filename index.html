@@ -134,17 +134,31 @@
     display: block;
   }
 
-  /* MÉTRIQUES SOUS L'INDICATEUR */
-  .metrics-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+  /* LAYOUT INDICATEUR */
+  .ind-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 6px;
   }
+  .ind-left {
+    flex: 0 0 auto;
+    text-align: left;
+  }
+  .ind-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* MÉTRIQUES DROITE */
   .metric {
     background: rgba(0,0,0,0.25);
     border-radius: 10px;
-    padding: 8px 10px;
-    text-align: center;
+    padding: 8px 12px;
+    text-align: right;
   }
   .metric-val {
     font-size: 1.05rem;
@@ -158,6 +172,7 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 2px;
+    color: rgba(255,255,255,0.7);
   }
 
   /* COMMENTAIRE IA */
@@ -304,19 +319,25 @@
     <!-- INDICATEUR -->
     <div class="indicator-card neutral" id="indicCard" style="display:none">
       <div class="ind-status" id="indStatus"></div>
-      <div class="ind-mois-wrap">
-        <div class="ind-mois-val" id="indMois"></div>
-        <div class="ind-mois-unit" id="indMoisUnit"></div>
-      </div>
-      <div class="ind-mois-label" id="indMoisLabel">mois de couverture de trésorerie</div>
-      <div class="metrics-row" id="metricsRow" style="display:none">
-        <div class="metric">
-          <div class="metric-val" id="mCapacity"></div>
-          <div class="metric-lbl">Capacité élargie</div>
+      <div class="ind-layout">
+        <!-- GAUCHE : mois -->
+        <div class="ind-left">
+          <div class="ind-mois-wrap">
+            <div class="ind-mois-val" id="indMois"></div>
+            <div class="ind-mois-unit" id="indMoisUnit"></div>
+          </div>
+          <div class="ind-mois-label" id="indMoisLabel">mois de couverture</div>
         </div>
-        <div class="metric">
-          <div class="metric-val" id="mBesoin"></div>
-          <div class="metric-lbl">Besoin mensuel</div>
+        <!-- DROITE : capacité + besoin -->
+        <div class="ind-right" id="metricsRow" style="display:none">
+          <div class="metric">
+            <div class="metric-val" id="mCapacity"></div>
+            <div class="metric-lbl">Capacité élargie</div>
+          </div>
+          <div class="metric" style="margin-top:8px">
+            <div class="metric-val" id="mBesoin"></div>
+            <div class="metric-lbl">Besoin mensuel</div>
+          </div>
         </div>
       </div>
     </div>
@@ -476,7 +497,7 @@ async function calculate() {
   $('indMoisLabel').textContent = 'de couverture de trésorerie';
 
   // Métriques
-  $('metricsRow').style.display = 'grid';
+  $('metricsRow').style.display = 'flex';
   $('mCapacity').textContent = fmt(capacity);
   $('mBesoin').textContent   = fmt(besoin);
 
