@@ -50,6 +50,8 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .ai { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 11px 13px; border-left: 3px solid #A495C3; display: none; }
 .ai-lbl { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #C8BFD9; margin-bottom: 6px; }
 .ai-txt { font-size: 0.78rem; line-height: 1.8; color: #fff; font-style: italic; white-space: pre-line; }
+.ai-highlight-green { display: inline-block; background: rgba(46,204,113,0.18); color: #1aab58; font-weight: 700; padding: 2px 8px; border-radius: 5px; font-style: normal; margin-top: 2px; }
+.ai-highlight-red { display: inline-block; background: rgba(231,76,60,0.15); color: #e74c3c; font-weight: 700; padding: 2px 8px; border-radius: 5px; font-style: normal; margin-top: 2px; }
 
 /* FORMULAIRE */
 .form { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 13px 13px 14px; }
@@ -267,21 +269,15 @@ ${isGreen ? 'Mets en avant les '+mois.toFixed(1)+' mois. Termine positivement.' 
     const data = await res.json();
     $('aiTxt').textContent = data.content?.map(b => b.text||'').join('') || fallback(capacity,besoin,mois,isGreen);
   } catch(e) {
-    $('aiTxt').textContent = fallback(capacity, besoin, mois, isGreen);
+    $('aiTxt').innerHTML = fallback(capacity, besoin, mois, isGreen);
   }
 }
 
 function fallback(capacity, besoin, mois, isGreen) {
-  if (isGreen) return [
-    `▸ Capacité financière élargie : ${fmt(capacity)}`,
-    `▸ Couverture : ${mois.toFixed(1)} mois de trésorerie disponible.`,
-    `▸ Aucun signal d'alerte identifié aujourd'hui.`
-  ].join('\n');
-  return [
-    `▸ Capacité financière élargie : ${fmt(capacity)}`,
-    `▸ Besoin mensuel de référence : ${fmt(besoin)}`,
-    `▸ Une vérification de la situation est recommandée.`
-  ].join('\n');
+  if (isGreen) {
+    return `▸ Capacité financière élargie : ${fmt(capacity)}\n▸ Couverture : ${mois.toFixed(1)} mois de trésorerie disponible.\n<span class="ai-highlight-green">▸ Aucun signal d'alerte identifié aujourd'hui.</span>`;
+  }
+  return `▸ Capacité financière élargie : ${fmt(capacity)}\n▸ Besoin mensuel de référence : ${fmt(besoin)}\n<span class="ai-highlight-red">▸ Une vérification de la situation est recommandée.</span>`;
 }
 
 // FORMAT INPUTS
