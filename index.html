@@ -19,7 +19,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .body { flex: 1; overflow-y: auto; padding: 7px 10px 8px; display: flex; flex-direction: column; gap: 7px; }
 
 /* INDICATEUR */
-.ind { border-radius: 12px; padding: 12px 14px; border: 1.5px solid rgba(255,255,255,0.1); display: none; flex: 1; min-height: 100px; }
+.ind { border-radius: 12px; padding: 12px 14px; border: 1.5px solid rgba(255,255,255,0.1); display: none; min-height: 110px; }
 .ind.green { background: rgba(255,255,255,0.04); border-color: #2ECC71; border-width: 2px; display: flex; flex-direction: column; }
 .ind.red   { background: rgba(255,255,255,0.04); border-color: #E74C3C; border-width: 2px; display: flex; flex-direction: column; }
 
@@ -47,16 +47,16 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .ind-metric-val { font-size: 1.25rem; font-weight: 900; color: #ffffff; letter-spacing: -0.02em; }
 
 /* COMMENTAIRE */
-.ai { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 9px 12px; border-left: 3px solid #A495C3; display: none; flex: 1; }
+.ai { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 9px 12px; border-left: 3px solid #A495C3; display: none; }
 .ai-lbl { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #C8BFD9; margin-bottom: 6px; }
 .ai-txt { font-size: 0.75rem; line-height: 2.1; color: #fff; font-style: italic; white-space: pre-line; }
 .ai-highlight-green { display: inline; background: #1a5c35; color: #7dffb3; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-style: normal; }
 .ai-highlight-red { display: inline; background: #5c1a1a; color: #ffb3b3; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-style: normal; }
 
 /* FORMULAIRE */
-.form { background: rgba(255,255,255,0.08); border-radius: 12px; padding: 10px 12px 11px; flex: 2; display: flex; flex-direction: column; }
+.form { background: rgba(255,255,255,0.08); border-radius: 12px; padding: 10px 12px 11px; }
 .form-title { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #fff; margin-bottom: 8px; }
-.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; flex: 1; align-content: space-evenly; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .field { display: flex; flex-direction: column; gap: 3px; }
 .field.full { grid-column: span 2; }
 .field label { font-size: 0.65rem; font-weight: 600; color: #e0d8f0; }
@@ -68,7 +68,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .iw input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
 .iw span { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); font-size: 0.8rem; pointer-events: none; }
 
-.btn { margin-top: auto; padding-top: 13px; padding-bottom: 13px; width: 100%; background: #A495C3; color: #162D49; font-size: 0.88rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; border: none; border-radius: 9px; cursor: pointer; }
+.btn { margin-top: 8px; width: 100%; padding: 11px; background: #A495C3; color: #162D49; font-size: 0.88rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; border: none; border-radius: 9px; cursor: pointer; }
 .btn:active { transform: scale(0.98); }
 
 .spinner { display: inline-block; width: 11px; height: 11px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 5px; }
