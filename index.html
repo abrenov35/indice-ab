@@ -205,11 +205,16 @@ async function saveGAS() {
 
 // CALCULATE
 async function calculate() {
-  const courant   = parseFloat($('courant').dataset.raw || $('courant').value.replace(/\s/g,'')) || 0;
-  const epargne   = parseFloat($('epargne').dataset.raw || $('epargne').value.replace(/\s/g,'')) || 0;
-  const creances  = parseFloat($('creances').value)  || 0;
-  const decouvert = parseFloat($('decouvert_val').value) || 25000;
-  const besoin    = parseFloat($('besoin').dataset.raw || $('besoin').value.replace(/\s/g,'')) || 70000;
+  function val(id, def) {
+    const el = document.getElementById(id);
+    const raw = String(el.dataset.raw || el.value).replace(/[\u00a0 ]/g,'').replace(',','.');
+    return parseFloat(raw) || def || 0;
+  }
+  const courant   = val('courant', 0);
+  const epargne   = val('epargne', 0);
+  const creances  = val('creances', 0);
+  const decouvert = 25000;
+  const besoin    = val('besoin', 70000);
 
   saveLocal();
   saveGAS();
