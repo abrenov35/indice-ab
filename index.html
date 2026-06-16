@@ -386,14 +386,14 @@
           <span id="dotGreen" class="dot dot-green"></span>
           <span id="dotRed" class="dot dot-red"></span>
         </div>
-        <div class="ind-right" id="metricsRow">
-          <div class="ind-metric">
-            <div class="ind-metric-lbl">Capacité élargie</div>
-            <div class="ind-metric-val" id="mCapacity" style="color:#fff;font-size:1rem;font-weight:800;min-height:1.3em;"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+          <div>
+            <div style="font-size:0.58rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">Capacité élargie</div>
+            <div id="mCapacity" style="font-size:1.1rem;font-weight:900;color:#fff;"></div>
           </div>
-          <div class="ind-metric">
-            <div class="ind-metric-lbl">Besoin mensuel</div>
-            <div class="ind-metric-val" id="mBesoin" style="color:#fff;font-size:1rem;font-weight:800;min-height:1.3em;"></div>
+          <div>
+            <div style="font-size:0.58rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">Besoin mensuel</div>
+            <div id="mBesoin" style="font-size:1.1rem;font-weight:900;color:#fff;"></div>
           </div>
         </div>
       </div>
@@ -561,7 +561,6 @@ async function calculate() {
   $('indMoisLabel').textContent = 'de couverture de trésorerie';
 
   // Métriques
-  $('metricsRow').style.display = 'flex';
   const capEl = $('mCapacity'); capEl.textContent = fmt(capacity); capEl.style.color='#fff';
   const besEl = $('mBesoin');   besEl.textContent = fmt(besoin);   besEl.style.color='#fff';
 
