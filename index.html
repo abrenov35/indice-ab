@@ -127,7 +127,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
     </div>
 
     <!-- FORMULAIRE -->
-    <div class="form">
+    <div class="form" id="formCard">
       <div class="form-title">Saisie des données</div>
       <div class="fields">
         <div class="field">
@@ -251,6 +251,11 @@ async function calculate() {
   const ind = $('ind');
   ind.style.display = 'block';
   ind.className = 'ind ' + (isGreen ? 'green' : 'red');
+  const borderColor = isGreen ? '#2ECC71' : '#E74C3C';
+  ['aiCard','formCard'].forEach(id => {
+    const el = $(id);
+    if (el) el.style.border = '1.5px solid ' + borderColor;
+  });
 
   $('indStatut').textContent = isGreen ? 'TRÉSORERIE EXCÉDENTAIRE' : 'TRÉSORERIE SOUS TENSION';
   $('ledVert').className  = 'led vert'  + (isGreen  ? ' on' : '');
