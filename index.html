@@ -123,15 +123,15 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
       <div class="fields">
         <div class="field">
           <label>Compte courant</label>
-          <div class="iw"><input type="number" id="courant" placeholder="0" inputmode="decimal"><span>€</span></div>
+          <div class="iw"><input type="text" inputmode="decimal" id="courant" placeholder="0" inputmode="decimal"><span>€</span></div>
         </div>
         <div class="field">
           <label>Compte épargne</label>
-          <div class="iw"><input type="number" id="epargne" placeholder="0" inputmode="decimal"><span>€</span></div>
+          <div class="iw"><input type="text" inputmode="decimal" id="epargne" placeholder="0" inputmode="decimal"><span>€</span></div>
         </div>
         <div class="field">
           <label>Créances certaines</label>
-          <div class="iw"><input type="number" id="creances" placeholder="0" inputmode="decimal"><span>€</span></div>
+          <div class="iw"><input type="text" inputmode="decimal" id="creances" placeholder="0" inputmode="decimal"><span>€</span></div>
         </div>
         <div class="field">
           <label>Découvert autorisé</label>
@@ -143,7 +143,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
         </div>
         <div class="field full">
           <label>Besoin mensuel de référence</label>
-          <div class="iw"><input type="number" id="besoin" value="70000" inputmode="decimal"><span>€</span></div>
+          <div class="iw"><input type="text" inputmode="decimal" id="besoin" value="70000" inputmode="decimal"><span>€</span></div>
         </div>
       </div>
       <button class="btn" onclick="calculate()">Calculer l'indice</button>
@@ -281,17 +281,17 @@ function fallback(capacity, besoin, mois, isGreen) {
 
 // FORMAT INPUTS
 function formatInput(el) {
-  const v = parseFloat(el.dataset.raw || el.value.replace(/\s/g,''));
+  const raw = el.value.replace(/[^0-9,.-]/g,'').replace(',','.');
+  const v = parseFloat(raw);
   if (!isNaN(v)) {
     el.dataset.raw = v;
     el.value = new Intl.NumberFormat('fr-FR').format(v);
   }
 }
 function unformatInput(el) {
-  const raw = el.dataset.raw || el.value.replace(/\s/g,'').replace(/,/g,'.');
-  el.value = raw;
+  el.value = el.dataset.raw || '';
 }
-document.querySelectorAll('.iw input[type="number"]').forEach(el => {
+document.querySelectorAll('.iw input[type="text"]').forEach(el => {
   el.addEventListener('focus', () => unformatInput(el));
   el.addEventListener('blur', () => formatInput(el));
 });
@@ -301,7 +301,7 @@ loadLocal();
 loadGAS();
 // Format on load
 setTimeout(() => {
-  document.querySelectorAll('.iw input[type="number"]').forEach(el => {
+  document.querySelectorAll('.iw input[type="text"]').forEach(el => {
     if (el.value && !el.dataset.raw) el.dataset.raw = el.value;
     formatInput(el);
   });
