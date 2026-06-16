@@ -254,23 +254,20 @@ async function calculate() {
   $('aiTxt').innerHTML = '<span class="spinner"></span> Analyse en cours…';
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6', max_tokens: 1000,
-        messages: [{ role: 'user', content:
-          `Tu es conseiller financier bienveillant d'AB RENOV 35. Commentaire trésorerie en 2 phrases max, calme, factuel, rassurant.
-Capacité élargie : ${fmt(capacity)} | Besoin mensuel : ${fmt(besoin)} | Couverture : ${mois.toFixed(1)} mois | Statut : ${isGreen ? 'EXCÉDENTAIRE' : 'SOUS TENSION'}.
-${isGreen ? 'Mets en avant les '+mois.toFixed(1)+' mois. Termine positivement.' : 'Factuel et non alarmiste. Recommande une vérification.'}`
-        }]
-      })
-    });
+    const p = new URLSearchParams({ action:'ai', capacity, besoin, mois: mois.toFixed(1), isGreen });
+    const res = await fetch(GAS_URL + '?' + p.toString());
     const data = await res.json();
-    $('aiTxt').textContent = data.content?.map(b => b.text||'').join('') || fallback(capacity,besoin,mois,isGreen);
+    $('aiTxt').innerHTML = data.text ? formatAI(data.text, isGreen) : fallback(capacity, besoin, mois, isGreen);
   } catch(e) {
     $('aiTxt').innerHTML = fallback(capacity, besoin, mois, isGreen);
   }
+}
+
+function formatAI(text, isGreen) {
+  const lines = text.trim().split('\n').filter(l => l.trim());
+  const last = lines.pop();
+  const cls = isGreen ? 'ai-highlight-green' : 'ai-highlight-red';
+  return lines.map(l => '▸ ' + l).join('\n') + '\n<span class="' + cls + '">▸ ' + last + '</span>';
 }
 
 function fallback(capacity, besoin, mois, isGreen) {
