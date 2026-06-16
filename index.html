@@ -68,6 +68,13 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .iw input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
 .iw span { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); font-size: 0.8rem; pointer-events: none; }
 
+.dec-toggle { display:flex; align-items:center; gap:8px; margin-top:5px; cursor:pointer; user-select:none; }
+.dec-toggle-btn { width:34px; height:18px; border-radius:9px; background:#2ECC71; position:relative; transition:background 0.2s; flex-shrink:0; }
+.dec-toggle-btn::after { content:''; position:absolute; width:14px; height:14px; border-radius:50%; background:#fff; top:2px; left:18px; transition:left 0.2s; }
+.dec-toggle-btn.off { background:rgba(255,255,255,0.2); }
+.dec-toggle-btn.off::after { left:2px; }
+#decToggleLbl { font-size:0.62rem; color:rgba(255,255,255,0.7); }
+
 .btn { margin-top: 10px; width: 100%; padding: 12px; background: #A495C3; color: #162D49; font-size: 0.88rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; border: none; border-radius: 9px; cursor: pointer; }
 .btn:active { transform: scale(0.98); }
 
@@ -142,6 +149,10 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
             <span>€</span>
           </div>
           <input type="hidden" id="decouvert_val" value="25000">
+          <div class="dec-toggle" onclick="toggleDecouvert()">
+            <div class="dec-toggle-btn" id="decToggleBtn"></div>
+            <span id="decToggleLbl">Inclus dans le calcul</span>
+          </div>
         </div>
         <div class="field full">
           <label>Besoin mensuel de référence</label>
@@ -226,7 +237,7 @@ async function calculate() {
   const courant   = val('courant', 0);
   const epargne   = val('epargne', 0);
   const creances  = val('creances', 0);
-  const decouvert = 25000;
+  const decouvert = decouvertActif ? 25000 : 0;
   const besoin    = val('besoin', 70000);
 
   saveLocal();
@@ -298,6 +309,15 @@ document.querySelectorAll('.iw input[type="text"]:not([readonly])').forEach(el =
 loadLocal();
 loadGAS();
 // Format on load
+let decouvertActif = true;
+function toggleDecouvert() {
+  decouvertActif = !decouvertActif;
+  const btn = document.getElementById('decToggleBtn');
+  const lbl = document.getElementById('decToggleLbl');
+  btn.className = 'dec-toggle-btn' + (decouvertActif ? '' : ' off');
+  lbl.textContent = decouvertActif ? 'Inclus dans le calcul' : 'Non inclus dans le calcul';
+}
+
 // Format all fields on load
 function formatAll() {
   document.querySelectorAll('.iw input[type="text"]:not([readonly])').forEach(el => {
