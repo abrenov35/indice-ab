@@ -419,6 +419,7 @@
     <!-- FORMULAIRE -->
     <div class="form-card">
       <div class="form-title">Saisie des données</div>
+      <div style="font-size:0.6rem;color:rgba(255,255,255,0.4);margin-bottom:8px;margin-top:-4px;">Découvert autorisé : 25 000 € (fixe)</div>
       <div class="fields">
         <div class="field">
           <label>Compte courant</label>
@@ -434,20 +435,14 @@
             <span>€</span>
           </div>
         </div>
-        <div class="field">
+        <div class="field full">
           <label>Créances certaines</label>
           <div class="input-wrap">
             <input type="number" id="creances" placeholder="0" step="100" inputmode="decimal">
             <span>€</span>
           </div>
         </div>
-        <div class="field">
-          <label>Découvert autorisé</label>
-          <div class="input-wrap">
-            <input type="number" id="decouvert" value="25000" step="500" inputmode="decimal">
-            <span>€</span>
-          </div>
-        </div>
+<input type="hidden" id="decouvert" value="25000">
         <div class="field full">
           <label>Besoin mensuel de référence</label>
           <div class="input-wrap">
