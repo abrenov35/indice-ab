@@ -90,8 +90,9 @@
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    opacity: 0.85;
-    margin-bottom: 4px;
+    opacity: 1;
+    font-size: 0.72rem;
+    margin-bottom: 6px;
   }
 
   /* MOIS : élément star */
@@ -150,7 +151,7 @@
   }
   .metric-lbl {
     font-size: 0.6rem;
-    opacity: 0.75;
+    opacity: 0.9;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 2px;
@@ -168,13 +169,13 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--lavande-light);
+    color: rgba(255,255,255,0.95);
     margin-bottom: 5px;
   }
   .ai-text {
     font-size: 0.78rem;
     line-height: 1.55;
-    color: rgba(255,255,255,0.88);
+    color: rgba(255,255,255,0.95);
     font-style: italic;
   }
 
@@ -298,14 +299,13 @@
   <div class="body">
 
     <!-- INDICATEUR -->
-    <div class="indicator-card neutral" id="indicCard">
-      <div class="ind-status" id="indStatus">En attente de saisie</div>
-      <span class="ind-icon" id="indIcon">💼</span>
+    <div class="indicator-card neutral" id="indicCard" style="display:none">
+      <div class="ind-status" id="indStatus"></div>
       <div class="ind-mois-wrap">
-        <div class="ind-mois-val" id="indMois">—</div>
+        <div class="ind-mois-val" id="indMois"></div>
         <div class="ind-mois-unit" id="indMoisUnit"></div>
       </div>
-      <div class="ind-mois-label" id="indMoisLabel">mois de couverture</div>
+      <div class="ind-mois-label" id="indMoisLabel">mois de couverture de trésorerie</div>
       <div class="metrics-row" id="metricsRow" style="display:none">
         <div class="metric">
           <div class="metric-val" id="mCapacity"></div>
@@ -408,10 +408,9 @@ async function calculate() {
 
   // Indicateur
   const card = $('indicCard');
+  card.style.display = 'block';
   card.className = 'indicator-card ' + (isGreen ? 'green' : 'red');
-  $('indStatus').textContent = isGreen ? '✅ SITUATION VERTE' : '🔴 SITUATION ROUGE';
-  $('indIcon').textContent = isGreen ? '✓' : '!';
-  $('indIcon').style.fontSize = '2rem';
+  $('indStatus').textContent = isGreen ? '✅  SITUATION VERTE' : '🔴  SITUATION ROUGE';
 
   // MOIS en grand
   $('indMois').textContent = mois.toFixed(1);
