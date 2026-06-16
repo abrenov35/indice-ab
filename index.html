@@ -551,7 +551,7 @@ async function calculate() {
   const card = $('indicCard');
   card.style.display = 'block';
   card.className = 'indicator-card ' + (isGreen ? 'green' : 'red');
-  $('indStatus').textContent = isGreen ? 'Situation verte' : 'Situation rouge';
+  $('indStatus').textContent = isGreen ? 'TRÉSORERIE EXCÉDENTAIRE' : 'TRÉSORERIE SOUS TENSION';
   $('dotGreen').className = 'dot dot-green' + (isGreen ? ' on' : '');
   $('dotRed').className   = 'dot dot-red'   + (!isGreen ? ' on' : '');
 
